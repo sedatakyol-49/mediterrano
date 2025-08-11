@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <div class="nav__inner">
+    <a class="brand" routerLink="/" (click)="close()">Mediterrano</a>
+
+    <button class="hamburger" type="button" aria-label="Menü" [class.open]="isOpen()" (click)="toggle()">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="links desktop">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a></li>
+      <li><a routerLink="/ueber-uns" routerLinkActive="active">Über uns</a></li>
+      <li><a routerLink="/kontakt" routerLinkActive="active">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <div class="mobile-menu" [class.open]="isOpen()" (click)="close()">
+    <div class="mobile-menu__panel" (click)="$event.stopPropagation()">
+      <a routerLink="/" (click)="close()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a>
+      <a routerLink="/ueber-uns" (click)="close()" routerLinkActive="active">Über uns</a>
+      <a routerLink="/kontakt" (click)="close()" routerLinkActive="active">Kontakt</a>
+    </div>
+  </div>
+</nav> 

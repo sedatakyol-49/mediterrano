@@ -1,0 +1,17 @@
+.icon-badge {
+  --badge-color: #2f7d69;
+  width: 56px; height: 56px; border-radius: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: color-mix(in srgb, var(--badge-color) 15%, #fff);
+  color: var(--badge-color);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--badge-color) 25%, transparent);
+  position: relative;
+  animation: float 5s ease-in-out infinite;
+  will-change: transform;
+}
+.icon-badge .material-symbols-rounded { font-size: 28px; line-height: 1; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+} 

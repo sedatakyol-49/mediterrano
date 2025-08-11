@@ -1,0 +1,10 @@
+.page-hero { background: linear-gradient(120deg, rgba(47,125,105,0.85), rgba(214,159,95,0.85)), url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat; color: #fff; padding: 5rem 1rem; text-align: center; }
+.container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+.grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+.card { background: #fff; border-radius: 14px; padding: 1rem 1.1rem; box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+form label { display: block; font-weight: 600; margin-top: 0.75rem; }
+input, textarea { width: 100%; margin-top: 0.35rem; border: 1px solid #e2e2e2; border-radius: 10px; padding: 0.7rem 0.8rem; font: inherit; }
+button { margin-top: 1rem; background: var(--color-primary); color: #fff; border: none; padding: 0.7rem 1rem; border-radius: 10px; cursor: pointer; }
+button:hover { filter: brightness(1.05); }
+.thanks { color: var(--color-primary); margin-top: .5rem; }
+@media (max-width: 880px) { .grid { grid-template-columns: 1fr; } } 

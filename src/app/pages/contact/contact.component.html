@@ -1,0 +1,39 @@
+<section class="page-hero">
+  <h1>Kontakt</h1>
+  <p>Wir freuen uns auf Ihre Nachricht.</p>
+</section>
+
+<section class="container">
+  <div class="grid">
+    <form class="card" (ngSubmit)="submit()" #f="ngForm">
+      <label>
+        Name
+        <input name="name" [(ngModel)]="form.name" required placeholder="Ihr Name" />
+      </label>
+      <label>
+        E-Mail
+        <input name="email" type="email" [(ngModel)]="form.email" required placeholder="name@mail.de" />
+      </label>
+      <label>
+        Nachricht
+        <textarea name="message" [(ngModel)]="form.message" rows="5" placeholder="Ihre Nachricht..."></textarea>
+      </label>
+      <button type="submit">Senden</button>
+      <p class="thanks" *ngIf="submitted">Vielen Dank! Wir melden uns zeitnah.</p>
+    </form>
+
+    <aside class="card info">
+      <h3>Adresse</h3>
+      <p>Beispielstraße 12, 79098 Freiburg</p>
+
+      <h3>Öffnungszeiten</h3>
+      <ul>
+        <li>Mo–Fr: 09:00–19:00</li>
+        <li>Sa: 10:00–17:00</li>
+      </ul>
+
+      <h3>Telefon</h3>
+      <p>+49 761 000000</p>
+    </aside>
+  </div>
+</section> 
