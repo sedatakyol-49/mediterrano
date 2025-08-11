@@ -7,3 +7,9 @@
 .content-wrapper {
   flex: 1 0 auto;
 }
+
+@media (max-width: 880px) {
+  .content-wrapper {
+    padding-top: 112px; /* fixed navbar height on mobile so content doesn't sit under header */
+  }
+}
