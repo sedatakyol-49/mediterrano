@@ -1,6 +1,7 @@
 .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #fff; border-bottom: 1px solid #eee; }
-.nav__inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: .75rem 1rem; }
-.brand { font-weight: 800; color: var(--color-primary); text-decoration: none; font-size: 1.2rem; }
+.nav__inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; }
+.brand { font-weight: 800; color: var(--color-primary); text-decoration: none; font-size: 1.2rem; display: inline-flex; align-items: center; padding: 0; margin-left: -8px; }
+.brand img { height: 56px; width: auto; display: block; padding: 0; margin: 0; }
 
 .hamburger { display: none; width: 40px; height: 40px; border: 1px solid #eee; border-radius: 10px; background: #fff; align-items: center; justify-content: center; gap: 4px; cursor: pointer; position: relative; }
 .hamburger span { position: absolute; width: 18px; height: 2px; background: #333; transition: transform .2s ease, opacity .2s ease, top .2s ease; }
@@ -17,7 +18,7 @@
 .links a.active { background: var(--color-primary); color: #fff; }
 
 .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.36); }
-.mobile-menu__panel { position: absolute; top: 56px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #eee; display: grid; transform-origin: top center; transform: translateY(-8px) scaleY(0.98); opacity: 0; transition: transform .18s ease, opacity .18s ease; }
+.mobile-menu__panel { position: absolute; top: 88px; left: 0; right: 0; background: #fff; border-bottom: 1px solid #eee; display: grid; transform-origin: top center; transform: translateY(-8px) scaleY(0.98); opacity: 0; transition: transform .18s ease, opacity .18s ease; }
 .mobile-menu__panel a { padding: 0.9rem 1rem; border-bottom: 1px solid #f2f2f2; text-decoration: none; color: #222; font-weight: 600; }
 
 .mobile-menu.open { display: block; animation: fadeIn .15s ease-out both; }

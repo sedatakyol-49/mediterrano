@@ -1,6 +1,8 @@
 <nav class="navbar">
   <div class="nav__inner">
-    <a class="brand" routerLink="/" (click)="close()">Mediterrano</a>
+    <a class="brand" routerLink="/" (click)="close()">
+      <img src="assets/mediteranno-logo.jpg" alt="Mediterrano Logo" />
+    </a>
 
     <button class="hamburger" type="button" aria-label="Menü" [class.open]="isOpen()" (click)="toggle()">
       <span></span><span></span><span></span>
