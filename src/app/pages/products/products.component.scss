@@ -5,6 +5,14 @@
   text-align: center;
 }
 
+.products-toolbar { position: sticky; top: 80px; z-index: 10; background: #fff; border-bottom: 1px solid #eee; }
+.products-toolbar .container { max-width: 1100px; margin: 0 auto; padding: .6rem 1rem; }
+.chips { display: flex; gap: .5rem; align-items: center; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; }
+.chip { display: inline-flex; align-items: center; padding: .45rem .75rem; border-radius: 999px; border: 1px solid #e5e7eb; color: #2b2b2b; text-decoration: none; white-space: nowrap; background: #fff; cursor: pointer; font: inherit; }
+.chip:hover { background: #f8f9fa; }
+.chip.primary { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.chips .spacer { flex: 1 1 auto; }
+
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -179,6 +187,7 @@
 }
 
 @media (max-width: 768px) {
+  .products-toolbar { top: 96px; }
   .page-hero {
     padding: 2.8rem 0.8rem;
   }

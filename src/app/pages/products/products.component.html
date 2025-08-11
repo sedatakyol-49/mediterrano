@@ -3,6 +3,16 @@
   <p>Entdecken Sie unser komplettes Sortiment an exquisiten Feinkost und orientalischen Spezialitäten</p>
 </section>
 
+<section class="products-toolbar" *ngIf="categories().length">
+  <div class="container">
+    <div class="chips">
+      <button class="chip" type="button" *ngFor="let cat of categories()" (click)="scrollToCategory(cat.id)">{{ cat.title }}</button>
+      <span class="spacer"></span>
+      <a class="chip primary" routerLink="/kontakt">Catering / Anfrage</a>
+    </div>
+  </div>
+  </section>
+
 <section class="products-content container">
   <div class="intro-text">
     <p>
@@ -13,7 +23,7 @@
   </div>
 
   <div class="categories" *ngIf="categories().length">
-    <div class="category" *ngFor="let cat of categories()">
+    <div class="category" *ngFor="let cat of categories()" [attr.id]="cat.id">
       <div class="category-header">
         <h2>{{ cat.title }}</h2>
         <p class="category__desc" *ngIf="cat.description">{{ cat.description }}</p>
