@@ -6,18 +6,20 @@
       <span></span><span></span><span></span>
     </button>
 
-    <ul class="links desktop">
-      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a></li>
-      <li><a routerLink="/ueber-uns" routerLinkActive="active">Über uns</a></li>
-      <li><a routerLink="/kontakt" routerLinkActive="active">Kontakt</a></li>
-    </ul>
+              <ul class="links desktop">
+            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a></li>
+            <li><a routerLink="/produkte" routerLinkActive="active">Produkte</a></li>
+            <li><a routerLink="/ueber-uns" routerLinkActive="active">Über uns</a></li>
+            <li><a routerLink="/kontakt" routerLinkActive="active">Kontakt</a></li>
+          </ul>
   </div>
 
   <div class="mobile-menu" [class.open]="isOpen()" (click)="close()">
-    <div class="mobile-menu__panel" (click)="$event.stopPropagation()">
-      <a routerLink="/" (click)="close()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a>
-      <a routerLink="/ueber-uns" (click)="close()" routerLinkActive="active">Über uns</a>
-      <a routerLink="/kontakt" (click)="close()" routerLinkActive="active">Kontakt</a>
-    </div>
+            <div class="mobile-menu__panel" (click)="$event.stopPropagation()">
+          <a routerLink="/" (click)="close()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a>
+          <a routerLink="/produkte" (click)="close()" routerLinkActive="active">Produkte</a>
+          <a routerLink="/ueber-uns" (click)="close()" routerLinkActive="active">Über uns</a>
+          <a routerLink="/kontakt" (click)="close()" routerLinkActive="active">Kontakt</a>
+        </div>
   </div>
 </nav> 

@@ -18,5 +18,11 @@ export class HomeComponent {
   heroTitle = 'Übersicht über unser Sortiment';
   heroSubtitle = 'In unserem Laden bieten wir eine Vielfalt an hochwertigen und regionalen Produkten, die sowohl Feinschmecker als auch gesundheitsbewusste Kunden ansprechen.';
 
-  defaultImageUrl = 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1200&auto=format&fit=crop';
+  // Jede Kategorie auf maximal 3 Items begrenzen
+  limitedCategories = computed(() => 
+    this.categories().map(cat => ({
+      ...cat,
+      items: cat.items.slice(0, 3)
+    }))
+  );
 } 

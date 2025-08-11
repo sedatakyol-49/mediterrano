@@ -25,30 +25,41 @@
   </div>
 </section>
 
-<section id="sortiment" class="categories" *ngIf="categories().length">
-  <div class="container">
-    <div class="category" *ngFor="let cat of categories()">
-      <h2>{{ cat.title }}</h2>
-      <p class="category__desc" *ngIf="cat.description">{{ cat.description }}</p>
-      <div class="items">
-        <div class="item" *ngFor="let item of cat.items">
-          <div class="item__top">
-            <div class="item__icon">
-              <app-icon-badge [icon]="item.icon || 'restaurant'" [color]="item.accentColor || '#2f7d69'"></app-icon-badge>
-            </div>
-            <div class="item__info">
-              <h3>{{ item.name }}</h3>
-              <p *ngIf="item.description">{{ item.description }}</p>
-              <div class="tags" *ngIf="item.tags?.length">
-                <span class="tag" *ngFor="let t of item.tags">{{ t }}</span>
+      <section id="sortiment" class="categories" *ngIf="limitedCategories().length">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Unser Sortiment im Überblick</h2>
+            <p class="section-subtitle">Entdecken Sie eine Auswahl unserer beliebtesten Produkte</p>
+          </div>
+
+          <div class="category" *ngFor="let cat of limitedCategories()">
+            <h3>{{ cat.title }}</h3>
+            <p class="category__desc" *ngIf="cat.description">{{ cat.description }}</p>
+            <div class="items">
+              <div class="item" *ngFor="let item of cat.items">
+                <div class="item__top">
+                  <div class="item__icon">
+                    <app-icon-badge [icon]="item.icon || 'restaurant'" [color]="item.accentColor || '#2f7d69'"></app-icon-badge>
+                  </div>
+                  <div class="item__info">
+                    <h3>{{ item.name }}</h3>
+                    <p *ngIf="item.description">{{ item.description }}</p>
+                    <div class="tags" *ngIf="item.tags?.length">
+                      <span class="tag" *ngFor="let t of item.tags">{{ t }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="item__footer" *ngIf="item.priceLabel">
+                  <span class="price">{{ item.priceLabel }}</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="item__footer" *ngIf="item.priceLabel">
-            <span class="price">{{ item.priceLabel }}</span>
+
+          <div class="view-all-section">
+            <a routerLink="/produkte" class="view-all-btn">
+              VOLLSTÄNDIGE GALERIE ANZEIGEN
+            </a>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section> 
+      </section> 
