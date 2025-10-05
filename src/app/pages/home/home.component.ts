@@ -18,11 +18,11 @@ export class HomeComponent {
   heroTitle = 'Übersicht über unser Sortiment';
   heroSubtitle = 'In unserem Laden bieten wir eine Vielfalt an hochwertigen und regionalen Produkten, die sowohl Feinschmecker als auch gesundheitsbewusste Kunden ansprechen.';
 
-  // Jede Kategorie auf maximal 3 Items begrenzen
+  // Jede Kategorie auf maximal 6 Items begrenzen
   limitedCategories = computed(() => 
     this.categories().map(cat => ({
       ...cat,
-      items: cat.items.slice(0, 3)
+      items: cat.items.slice(0, 6)
     }))
   );
 } 
