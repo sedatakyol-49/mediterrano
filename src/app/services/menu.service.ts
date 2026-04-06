@@ -6,55 +6,217 @@ export class MenuService {
   private readonly categoriesSignal = signal<MenuCategory[]>([
     {
       id: 'mittags-menue',
-      title: 'Mittags Menü',
-      description: 'Täglich wechselnde Mittagsgerichte.',
+      title: 'Mittagsmenü',
+      description: 'Warme Gerichte, Bowls, Teller und Sandwiches für eine frische Mittagspause in Emmendingen.',
       icon: 'lunch_dining',
       items: [
-        { id: 'mittagstisch', name: 'Mittagstisch', description: 'Wechselndes Menü zur Mittagszeit.', icon: 'lunch_dining', accentColor: '#d69f5f', imageUrl: 'assets/aufstrichteller.jpg' },
-        { id: 'antipasti-teller', name: 'Antipasti Teller', description: 'Auswahl mediterraner Vorspeisen mit Hummus, Feta, Oliven und gegrilltem Gemüse', icon: 'restaurant_menu', accentColor: '#2f7d69', imageUrl: 'assets/aufstrichteller.jpg' },
-        { id: 'antipasti-sandwich', name: 'Antipasti Sandwich', description: 'Mediterranes Sandwich mit Antipasti-Zutaten', icon: 'lunch_dining', accentColor: '#b83e3e', imageUrl: 'assets/hamburger-aufstrich.jpg'},
-        { id: 'fruehstueck-teller', name: 'Frühstück Teller', description: 'Gegrilltes Simit, Ei und frisches Gemüse', icon: 'brunch_dining', accentColor: '#d69f5f',  imageUrl: 'assets/aufstrichteller.jpg' },
-        { id: 'toast', name: 'Toast', description: 'Gebratene Sandwiches mit Beilagen', icon: 'bakery_dining', accentColor: '#d69f5f',  imageUrl: 'assets/toast.jpg' },
-        { id: 'reis-gemuese', name: 'Reis mit Gemüse', description: 'Herzhafte Gemüsepfanne mit Reis', icon: 'rice_bowl', accentColor: '#2f7d69', imageUrl: 'assets/aufstrichteller.jpg' },
-        { id: 'bowl-vegetarisch', name: 'Bowl Vegetarisch', description: 'Bunte Bowl mit Kichererbsen, Grünzeug, Mais, Tomaten', icon: 'eco', accentColor: '#2f7d69', tags: ['vegan'], imageUrl: 'assets/bowl.jpg' },
-        { id: 'bowl-haehnchen', name: 'Bowl mit Hähnchen', description: 'Bunte Bowl mit Hähnchen, Kichererbsen, Grünzeug, Mais, Tomaten', icon: 'restaurant', accentColor: '#b83e3e', imageUrl: 'assets/aufstrichteller.jpg' },
-        { id: 'linsensuppe', name: 'Linsensuppe', description: 'Würzige Linsensuppe', icon: 'soup_kitchen', accentColor: '#b83e3e', tags: ['vegan'],  imageUrl: 'assets/aufstrichteller.jpg'},
-        { id: 'gemuesesuppe', name: 'Gemüsesuppe', description: 'Frische Gemüsesuppe', icon: 'soup_kitchen', accentColor: '#2f7d69', tags: ['vegan'],  imageUrl: 'assets/aufstrichteller.jpg' },
-        { id: 'fruchtsaefte', name: 'Frisch Gepresste Fruchtsäfte', description: 'Auswahl verschiedener frisch gepresster Säfte', icon: 'local_drink', accentColor: '#b83e3e',  imageUrl: 'assets/aufstrichteller.jpg' }
+        {
+          id: 'bowl-vegetarisch',
+          name: 'Bowl Vegetarisch',
+          description: 'Mit Reis oder Bulgur, Salat, Kichererbsen, Tomaten, Gurken, Mais, Oliven, Feta und roten Zwiebeln.',
+          icon: 'eco',
+          accentColor: '#2f7d69',
+          tags: ['vegetarisch'],
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-010.jpeg',
+          priceLabel: '10,50 EUR'
+        },
+        {
+          id: 'bowl-haehnchen',
+          name: 'Bowl mit Hähnchen',
+          description: 'Mit Hähnchenbrustfilet, Reis oder Bulgur, Salat, Kichererbsen, Tomaten, Gurken, Mais und roten Zwiebeln.',
+          icon: 'restaurant',
+          accentColor: '#b83e3e',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-005.jpeg',
+          priceLabel: '11,50 EUR'
+        },
+        {
+          id: 'reis-gemuese',
+          name: 'Reis mit Gemüse',
+          description: 'Reis oder Bulgur mit Gemüse, Salat und verschiedenen hausgemachten Saucen.',
+          icon: 'rice_bowl',
+          accentColor: '#d69f5f',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-001.jpeg',
+          priceLabel: '10,00 EUR'
+        },
+        {
+          id: 'antipasti-teller',
+          name: 'Antipasti Teller',
+          description: 'Verschiedene Salate und Antipasti frisch aus der Feinkosttheke.',
+          icon: 'restaurant_menu',
+          accentColor: '#2f7d69',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-002.jpeg',
+          priceLabel: 'Preis nach Gewicht'
+        },
+        {
+          id: 'falafel-teller',
+          name: 'Falafel Teller',
+          description: 'Mit Falafel, Reis oder Bulgur, Salat und verschiedenen Saucen.',
+          icon: 'restaurant_menu',
+          accentColor: '#2f7d69',
+          tags: ['vegetarisch'],
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-094.jpeg',
+          priceLabel: '10,00 EUR'
+        },
+        {
+          id: 'minibaguette-mediterran',
+          name: 'Minibaguette Mediterran',
+          description: 'Mit Aufstrich, Tomate, Feta und Avocado.',
+          icon: 'lunch_dining',
+          accentColor: '#b83e3e',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-004.jpeg',
+          priceLabel: '8,50 EUR'
+        },
+        {
+          id: 'antipasti-sandwich',
+          name: 'Antipasti Sandwich',
+          description: 'Mit Frischkäsecreme, Salat, Riesenbohnen, getrockneten Tomaten, Paprikatropfen und gegrillter Zucchini.',
+          icon: 'lunch_dining',
+          accentColor: '#b83e3e',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-003.jpeg',
+          priceLabel: '8,90 EUR'
+        },
+        {
+          id: 'toastteller',
+          name: 'Toastteller',
+          description: 'Mit Brot, Knoblauchwurst, Gouda, Tomaten, Gurken, Feta, Oliven und gefüllten Paprika.',
+          icon: 'bakery_dining',
+          accentColor: '#d69f5f',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-008.jpeg',
+          priceLabel: '10,50 EUR'
+        },
+        {
+          id: 'toastteller-vegetarisch',
+          name: 'Toastteller Vegetarisch',
+          description: 'Mit Gouda, Tomaten, Gurken, Feta, Oliven und gefüllten Paprika.',
+          icon: 'bakery_dining',
+          accentColor: '#d69f5f',
+          tags: ['vegetarisch'],
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-088.jpeg',
+          priceLabel: '10,50 EUR'
+        },
+        {
+          id: 'toast',
+          name: 'Toast',
+          description: 'Brot mit Knoblauchwurst, Gouda und Tomatenmark.',
+          icon: 'bakery_dining',
+          accentColor: '#d69f5f',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-088.jpeg',
+          priceLabel: '6,50 EUR'
+        },
+        {
+          id: 'toast-vegetarisch',
+          name: 'Toast Vegetarisch',
+          description: 'Brot mit Gouda, Tomatenmark, getrockneten Tomaten oder gegrillten Champignons.',
+          icon: 'bakery_dining',
+          accentColor: '#2f7d69',
+          tags: ['vegetarisch'],
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-004.jpeg',
+          priceLabel: '6,50 EUR'
+        },
+        {
+          id: 'linsensuppe',
+          name: 'Linsensuppe',
+          description: 'Hausgemachte Linsensuppe mit Brot.',
+          icon: 'soup_kitchen',
+          accentColor: '#b83e3e',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-001.jpeg',
+          priceLabel: '5,90 EUR'
+        },
+        {
+          id: 'gemuesesuppe',
+          name: 'Gemüsesuppe',
+          description: 'Hausgemachte Gemüsesuppe mit Brot.',
+          icon: 'soup_kitchen',
+          accentColor: '#2f7d69',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-001.jpeg',
+          priceLabel: '5,90 EUR'
+        },
+        {
+          id: 'manti',
+          name: 'Manti',
+          description: 'Maultaschen nach türkischer Art, auf Wunsch mit Beilagensalat.',
+          icon: 'dinner_dining',
+          accentColor: '#b83e3e',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-006.jpeg',
+          priceLabel: '6,90 EUR'
+        }
       ]
     },
     {
       id: 'fruehstueck',
       title: 'Mediterrano Frühstücksmenü',
-      description: '„Frühstücken wie im Urlaub – täglich bei uns."',
+      description: 'Frühstücken wie im Urlaub, aber mitten in Emmendingen.',
       icon: 'brunch_dining',
       items: [
-        { id: 'klassisch-mediterran', name: 'Klassisch Mediterran', description: 'Joghurt mit Honig, Walnüssen & Haferflocken, Frischer Obstteller (saisonal), Kräuteromelette oder gekochtes Ei, Frisch gepresster Saft', icon: 'brunch_dining', accentColor: '#d69f5f', imageUrl: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=400&auto=format&fit=crop' },
-        { id: 'tuerkisches-genussfruehstueck', name: 'Türkisches Genussfrühstück', description: 'Simit & frisch gebackenes Fladenbrot, Käsevielfalt (Beyaz Peynir, Kaşar, Feta), Oliven, Tomaten, Gurken, Paprika, Verschiedene hausgemachte Dips & Marmeladen, Honig mit Kaymak, Börek & Sigara-Böreği, Menemen oder Sucuklu Yumurta (nach Wahl), Baklava zum Abschluss, Unbegrenzt Çay', icon: 'brunch_dining', accentColor: '#2f7d69', imageUrl: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=400&auto=format&fit=crop' },
-        { id: 'leicht-vital', name: 'Leicht & Vital', description: 'Simit mit geschmolzenem Käse gefüllt, Spiegelei in der Mitte gebacken, Tomaten- & Kräuterbeilage, Wahlweise mit Sucuk (+1,50 €), Ayran, Çay oder frisch gepresster Saft nach Wahl', icon: 'eco', accentColor: '#2f7d69', imageUrl: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=400&auto=format&fit=crop' },
-        { id: 'simit-toast-spezial', name: 'Simit-Toast Spezial', description: 'Börek (wahlweise mit Spinat-Feta oder Hackfleisch), Menemen (Eiergericht mit Tomaten, Paprika & Kräutern), Schafskäse mit Gurken & Tomaten, Türkischer Mokka oder Çay', icon: 'bakery_dining', accentColor: '#d69f5f', imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop' },
-        { id: 'serpme-kahvalti', name: 'Wochenend-Spezial: Serpme Kahvaltı', description: 'Samstags mit Reservierung', icon: 'event', accentColor: '#b83e3e', tags: ['Samstags mit Reservierung'], imageUrl: 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=400&auto=format&fit=crop' },
-        { id: 'suesser-abschluss', name: 'Süßer Abschluss', description: 'Kleine Auswahl an Baklava & Lokum, Türkischer Kaffee, Schwarzer Tee, Türkischer Apfeltee oder Minztee', icon: 'bakery_dining', accentColor: '#d69f5f', imageUrl: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=400&auto=format&fit=crop' }
+        {
+          id: 'klassisch-mediterran',
+          name: 'Klassisch Mediterran',
+          description: 'Mit Fladenbrot und Simit, Olivenauswahl, hausgemachten Brotaufstrichen und kleiner Käseauswahl.',
+          icon: 'brunch_dining',
+          accentColor: '#d69f5f',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-028.jpeg',
+          priceLabel: '12,90 EUR'
+        },
+        {
+          id: 'tuerkisches-genussfruehstueck',
+          name: 'Türkisches Genussfrühstück',
+          description: 'Mit Börek, Menemen, Schafskäse, Gurken, Tomaten sowie Çay oder Mokka.',
+          icon: 'brunch_dining',
+          accentColor: '#2f7d69',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-091.jpeg',
+          priceLabel: '13,90 EUR'
+        },
+        {
+          id: 'leicht-vital',
+          name: 'Leicht & Vital',
+          description: 'Mit Joghurt, Honig, Walnüssen, Haferflocken, frischem Obstteller, Ei und Tages-Saft.',
+          icon: 'eco',
+          accentColor: '#2f7d69',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-007.jpeg',
+          priceLabel: '12,90 EUR'
+        },
+        {
+          id: 'simit-toast-spezial',
+          name: 'Simit-Toast Spezial',
+          description: 'Mit Spiegelei, Tomaten, Gurken, Antipasti und auf Wunsch Sucuk sowie Ayran, Çay oder Tages-Saft.',
+          icon: 'bakery_dining',
+          accentColor: '#d69f5f',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-088.jpeg',
+          priceLabel: '11,90 EUR'
+        },
+        {
+          id: 'serpme-kahvalti',
+          name: 'Spezial Serpme Kahvalti',
+          description: 'Pro Person mit Simit, Fladenbrot, Käsevielfalt, Oliven, Aufstrichen, Marmelade, Honig, Börek und Ei-Variation.',
+          icon: 'event',
+          accentColor: '#b83e3e',
+          tags: ['Samstags mit Reservierung'],
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-031.jpeg',
+          priceLabel: '19,90 EUR'
+        },
+        {
+          id: 'boerek',
+          name: 'Börek & Börekstange',
+          description: 'Mit Käse, Spinat, Kartoffel oder Hackfleisch als herzhafte Frühstücksbeilage.',
+          icon: 'bakery_dining',
+          accentColor: '#d69f5f',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-088.jpeg',
+          priceLabel: 'ab 2,60 EUR'
+        },
+        {
+          id: 'suesser-abschluss',
+          name: 'Süßer Abschluss',
+          description: 'Baklava, Kadaif und kleine süße Spezialitäten aus der Theke.',
+          icon: 'bakery_dining',
+          accentColor: '#b83e3e',
+          imageUrl: 'assets/mediterrano-gallery/mediterrano-066.jpeg',
+          priceLabel: 'täglich frisch'
+        }
       ]
-    },
-    {
-      id: 'fruehstueck-extras',
-      title: 'Frühstück Extras',
-      description: 'Zusätzliche Optionen für Ihr Frühstück.',
-      icon: 'add_circle',
-     items: [
-        { id: 'extra-sucuk', name: 'Extra Sucuk', icon: 'restaurant', accentColor: '#b83e3e', imageUrl: 'assets/toast.jpg' },
-        { id: 'extra-simit', name: 'Extra Simit', icon: 'bakery_dining', accentColor: '#d69f5f', imageUrl: 'assets/toast.jpg' },
-        { id: 'extra-boerek', name: 'Extra Börek (2 Stück)', icon: 'bakery_dining', accentColor: '#d69f5f', imageUrl: 'assets/toast.jpg' },
-        { id: 'extra-dips', name: 'Extra Dips (nach Tagesauswahl)', icon: 'restaurant', accentColor: '#2f7d69', imageUrl: 'assets/toast.jpg' },
-        { id: 'extra-kaese', name: 'Extra Käseportion', icon: 'local_pizza', accentColor: '#d69f5f', imageUrl: 'assets/toast.jpg' },
-        { id: 'extra-saft', name: 'Glas frisch gepresster Saft', icon: 'local_drink', accentColor: '#b83e3e', imageUrl: 'assets/toast.jpg' },
-        { id: 'extra-kaffee', name: 'Türkischer Kaffee', icon: 'local_cafe', accentColor: '#6b4f3a', imageUrl: 'assets/toast.jpg' }
-]
     }
   ]);
 
   getCategories() {
     return this.categoriesSignal.asReadonly();
   }
-} 
+}

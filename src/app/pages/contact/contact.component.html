@@ -16,10 +16,13 @@
       </label>
       <label>
         Nachricht
-        <textarea name="message" [(ngModel)]="form.message" rows="5" placeholder="Ihre Nachricht..."></textarea>
+        <textarea name="message" [(ngModel)]="form.message" rows="5" required placeholder="Ihre Nachricht..."></textarea>
       </label>
-      <button type="submit">Senden</button>
-      <p class="thanks" *ngIf="submitted">Vielen Dank! Wir melden uns zeitnah.</p>
+      <button type="submit" [disabled]="loading || !f.valid">
+        {{ loading ? 'Wird gesendet...' : 'Senden' }}
+      </button>
+      <p class="thanks" *ngIf="submitted">Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.</p>
+      <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
     </form>
 
     <aside class="card info">
@@ -28,15 +31,29 @@
 
       <h3>Öffnungszeiten</h3>
       <ul>
-        <li>Mo–Fr: 09:00–19:00</li>
-        <li>Sa: 09:00–18:00</li>
+        <li>Mo-Fr: 09:00-19:00</li>
+        <li>Sa: 09:00-18:00</li>
       </ul>
 
       <h3>Telefon</h3>
       <p>07641 9621359</p>
 
-      <div class="map-card" aria-hidden="true">
+      <h3>E-Mail</h3>
+      <p>info@mediterrano-em.de</p>
+
+      <div class="map-card">
+        <div class="map-consent-card" *ngIf="!mapEnabled">
+          <p class="map-consent-card__eyebrow">Externer Inhalt</p>
+          <h4>Google Maps erst nach Klick laden</h4>
+          <p>
+            Beim Laden der Karte werden personenbezogene Daten an Google übermittelt. Es gelten dann die
+            Datenschutzbestimmungen von Google.
+          </p>
+          <button type="button" (click)="enableMap()">Google Maps laden</button>
+        </div>
+
         <iframe
+          *ngIf="mapEnabled"
           title="Google Maps"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
@@ -45,4 +62,4 @@
       </div>
     </aside>
   </div>
-</section> 
+</section>

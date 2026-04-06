@@ -10,7 +10,7 @@ import { IconBadgeComponent } from '../../components/icon-badge/icon-badge.compo
   template: `
     <section class="page-hero">
       <h1>Mediterrano Frühstücksmenü</h1>
-      <p>„Frühstücken wie im Urlaub – täglich bei uns."</p>
+      <p>"Frühstücken wie im Urlaub - täglich bei uns."</p>
     </section>
 
     <section class="container">
@@ -20,7 +20,7 @@ import { IconBadgeComponent } from '../../components/icon-badge/icon-badge.compo
             <h2>{{ cat.title }}</h2>
             <p class="category__desc" *ngIf="cat.description">{{ cat.description }}</p>
           </div>
-          
+
           <div class="items">
             <div class="item" *ngFor="let item of cat.items">
               <div class="item__image" *ngIf="item.imageUrl">
@@ -56,55 +56,55 @@ import { IconBadgeComponent } from '../../components/icon-badge/icon-badge.compo
       text-align: center;
       padding: 4rem 1rem;
     }
-    
+
     .page-hero h1 {
       font-size: 2.5rem;
       margin: 0 0 1rem;
       font-weight: 700;
     }
-    
+
     .page-hero p {
       font-size: 1.2rem;
       margin: 0;
       opacity: 0.9;
       font-style: italic;
     }
-    
+
     .container {
       max-width: 1100px;
       margin: 0 auto;
       padding: 3rem 1rem;
     }
-    
+
     .categories {
       display: grid;
       gap: 3rem;
     }
-    
+
     .category-header {
       text-align: center;
       margin-bottom: 2rem;
     }
-    
+
     .category-header h2 {
       font-size: 2rem;
       color: #d69f5f;
       margin: 0 0 0.5rem;
       font-weight: 600;
     }
-    
+
     .category__desc {
       color: #666;
       font-size: 1.1rem;
       margin: 0;
     }
-    
+
     .items {
       display: grid;
       gap: 1.5rem;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
-    
+
     .item {
       background: white;
       border-radius: 15px;
@@ -112,55 +112,55 @@ import { IconBadgeComponent } from '../../components/icon-badge/icon-badge.compo
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
+
     .item:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
-    
+
     .item__image img {
       width: 100%;
       height: 200px;
       object-fit: cover;
     }
-    
+
     .item__content {
       padding: 1.5rem;
     }
-    
+
     .item__top {
       display: flex;
       gap: 1rem;
       margin-bottom: 1rem;
     }
-    
+
     .item__info {
       flex: 1;
     }
-    
+
     .item__info.with-image {
       margin-left: 0;
     }
-    
+
     .item__info h3 {
       font-size: 1.3rem;
       color: #333;
       margin: 0 0 0.5rem;
       font-weight: 600;
     }
-    
+
     .item__info p {
       color: #666;
       margin: 0 0 0.5rem;
       line-height: 1.5;
     }
-    
+
     .tags {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    
+
     .tag {
       background: #f0f0f0;
       color: #666;
@@ -169,28 +169,28 @@ import { IconBadgeComponent } from '../../components/icon-badge/icon-badge.compo
       font-size: 0.8rem;
       font-weight: 500;
     }
-    
+
     .item__footer {
       border-top: 1px solid #eee;
       padding-top: 1rem;
       margin-top: 1rem;
     }
-    
+
     .price {
       font-size: 1.2rem;
       font-weight: 700;
       color: #d69f5f;
     }
-    
+
     @media (max-width: 768px) {
       .page-hero h1 {
         font-size: 2rem;
       }
-      
+
       .items {
         grid-template-columns: 1fr;
       }
-      
+
       .item__top {
         flex-direction: column;
         gap: 0.5rem;
@@ -200,9 +200,9 @@ import { IconBadgeComponent } from '../../components/icon-badge/icon-badge.compo
 })
 export class FruehstuecksmenueComponent {
   private menuService = inject(MenuService);
-  
-  categories = computed(() => 
-    this.menuService.getCategories()().filter(cat => 
+
+  categories = computed(() =>
+    this.menuService.getCategories()().filter((cat) =>
       cat.id === 'fruehstueck' || cat.id === 'fruehstueck-extras'
     )
   );

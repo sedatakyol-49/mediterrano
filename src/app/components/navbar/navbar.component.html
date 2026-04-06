@@ -2,28 +2,35 @@
   <div class="nav__inner">
     <a class="brand" routerLink="/" (click)="close()">
       <img src="assets/mediteranno-logo.jpg" alt="Mediterrano Logo" />
+      <span class="brand__copy">
+        <strong>Mediterrano</strong>
+        <small>Feinkost. Frühstück. Genuss.</small>
+      </span>
     </a>
+
+    <ul class="links desktop">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a></li>
+      <li><a routerLink="/mittags-menue" routerLinkActive="active">Mittag</a></li>
+      <li><a routerLink="/fruehstuecksmenue" routerLinkActive="active">Frühstück</a></li>
+      <li><a routerLink="/ueber-uns" routerLinkActive="active">Über uns</a></li>
+      <li><a routerLink="/kontakt" routerLinkActive="active">Kontakt</a></li>
+    </ul>
+
+    <a class="nav__cta desktop" href="https://maps.google.com/?q=Emmendingen%20Kirchstr%202" target="_blank" rel="noopener">Besuch planen</a>
 
     <button class="hamburger" type="button" aria-label="Menü" [class.open]="isOpen()" (click)="toggle()">
       <span></span><span></span><span></span>
     </button>
-
-              <ul class="links desktop">
-            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a></li>
-            <li><a routerLink="/mittags-menue" routerLinkActive="active">Menü</a></li>
-            <li><a routerLink="/fruehstuecksmenue" routerLinkActive="active">Frühstücks</a></li>
-            <li><a routerLink="/ueber-uns" routerLinkActive="active">Über uns</a></li>
-            <li><a routerLink="/kontakt" routerLinkActive="active">Kontakt</a></li>
-          </ul>
   </div>
 
   <div class="mobile-menu" [class.open]="isOpen()" (click)="close()">
-            <div class="mobile-menu__panel" (click)="$event.stopPropagation()">
-          <a routerLink="/" (click)="close()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a>
-          <a routerLink="/mittags-menue" (click)="close()" routerLinkActive="active">Mittags Menü</a>
-          <a routerLink="/fruehstuecksmenue" (click)="close()" routerLinkActive="active">Frühstücksmenü</a>
-          <a routerLink="/ueber-uns" (click)="close()" routerLinkActive="active">Über uns</a>
-          <a routerLink="/kontakt" (click)="close()" routerLinkActive="active">Kontakt</a>
-        </div>
+    <div class="mobile-menu__panel" (click)="$event.stopPropagation()">
+      <a routerLink="/" (click)="close()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Start</a>
+      <a routerLink="/mittags-menue" (click)="close()" routerLinkActive="active">Mittagsmenü</a>
+      <a routerLink="/fruehstuecksmenue" (click)="close()" routerLinkActive="active">Frühstücksmenü</a>
+      <a routerLink="/ueber-uns" (click)="close()" routerLinkActive="active">Über uns</a>
+      <a routerLink="/kontakt" (click)="close()" routerLinkActive="active">Kontakt</a>
+      <a href="https://maps.google.com/?q=Emmendingen%20Kirchstr%202" target="_blank" rel="noopener">Besuch planen</a>
+    </div>
   </div>
-</nav> 
+</nav>
