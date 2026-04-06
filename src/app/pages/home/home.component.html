@@ -4,13 +4,13 @@
       <p class="eyebrow">Mediterrano in Emmendingen</p>
       <h1>Hausgemachte Aufstriche, feine Antipasti und eine große Auswahl an Oliven.</h1>
       <p class="sub">
-        Mediterrano verbindet Frühstück, Mittagsgerichte, Feinkost und süße Spezialitäten zu einem Ort, an dem
-        man frisch essen, Produkte mitnehmen und echte mediterrane Vielfalt entdecken kann.
+        Mediterrano verbindet Feinkost, Café und mediterrane Spezialitäten zu einem Ort, an dem
+        man frisch entdecken, Produkte mitnehmen und ehrlichen Geschmack erleben kann.
       </p>
 
       <div class="hero__actions">
-        <a class="btn btn-primary" href="#fruehstueck-home">Frühstück entdecken</a>
-        <a class="btn btn-ghost" href="#feinkost-theke">Feinkost ansehen</a>
+        <a class="btn btn-primary" routerLink="/produkte">Produkte ansehen</a>
+        <a class="btn btn-ghost" routerLink="/kontakt">Anfrage senden</a>
       </div>
 
       <div class="hero__facts">
@@ -20,11 +20,11 @@
         </div>
         <div class="fact">
           <strong>Hausgemacht</strong>
-          <span>Aufstriche, Dips, Suppen und Feinkost mit eigener Handschrift</span>
+          <span>Aufstriche, Dips, Antipasti und Feinkost mit eigener Handschrift</span>
         </div>
         <div class="fact">
           <strong>Zentral in Emmendingen</strong>
-          <span>Ideal für Frühstück, Mittagspause und schnellen Genuss unterwegs</span>
+          <span>Ideal für Einkauf, Café-Pause und mediterranen Genuss unterwegs</span>
         </div>
       </div>
     </div>
@@ -51,8 +51,8 @@
 
 <section class="intro-band">
   <div class="container intro-band__inner">
-    <p>Von Simit und Frühstück über Bowls und warme Teller bis zu Aufstrichen, Oliven und Baklava: Mediterrano lebt von echter Vielfalt und hausgemachtem Geschmack.</p>
-    <a routerLink="/kontakt">Reservierung oder Anfrage</a>
+    <p>Von Antipasti und Oliven über Aufstriche und süße Spezialitäten bis zum Café vor Ort: Mediterrano lebt von echter Vielfalt und hausgemachtem Geschmack.</p>
+    <a routerLink="/produkte">Produkte entdecken</a>
   </div>
 </section>
 
@@ -61,7 +61,7 @@
     <div class="section-header section-header--left">
       <p class="section-kicker">Lieblingsbereiche</p>
       <h2 class="section-title">Mediterrano steht für Frische, Vielfalt und echte Produkte aus der eigenen Handschrift.</h2>
-      <p class="section-subtitle">Nicht nur ein Snack, sondern ein Ort für Frühstück, Mittag, Feinkost und kleine besondere Mitnahmeprodukte.</p>
+      <p class="section-subtitle">Nicht nur ein schneller Einkauf, sondern ein Ort für Feinkost, kleine Pausen und besondere Mitnahmeprodukte.</p>
     </div>
 
     <div class="signatures__grid">
@@ -85,7 +85,7 @@
       <p class="section-kicker">Produkte & Services</p>
       <h2>Ein Angebot für den ganzen Tag, nicht nur für einen schnellen Halt.</h2>
       <p>
-        Mediterrano ist Frühstückslokal, Mittagspause, Feinkosttheke und Mitnahmeort in einem. Gerade diese Mischung
+        Mediterrano ist Feinkostladen, Café und Mitnahmeort in einem. Gerade diese Mischung
         macht das Angebot reich, persönlich und für Emmendingen besonders interessant.
       </p>
     </div>
@@ -103,8 +103,8 @@
 <section class="packages">
   <div class="container">
     <div class="section-header">
-      <p class="section-kicker">Paket Menüs</p>
-      <h2 class="section-title">Klare Angebotsformate machen Mediterrano noch professioneller für Gruppen und Reservierungen.</h2>
+      <p class="section-kicker">Angebote</p>
+      <h2 class="section-title">Klare Feinkost- und Genussformate machen Mediterrano noch anfragbarer für Gruppen und besondere Anlässe.</h2>
       <p class="section-subtitle">So wirkt das Angebot hochwertig, organisiert und direkt anfragbar.</p>
     </div>
 
@@ -120,7 +120,7 @@
           <li *ngFor="let item of pack.items">{{ item }}</li>
         </ul>
 
-        <a routerLink="/kontakt" class="package-card__cta">Paket anfragen</a>
+        <a routerLink="/kontakt" class="package-card__cta">Angebot anfragen</a>
       </article>
     </div>
   </div>
@@ -130,9 +130,9 @@
   <div class="container gallery__grid">
     <div class="gallery__text">
       <p class="section-kicker">Impressionen</p>
-      <h2>Vom Frühstück bis zur süßen Theke zeigt sich Mediterrano jetzt über echte Produktbilder.</h2>
+      <h2>Von der herzhaften Theke bis zur süßen Ecke zeigt sich Mediterrano über echte Produktbilder.</h2>
       <p>
-        Oliven, Aufstriche, Antipasti, Bowls, Frühstücksteller und Desserts bekommen mehr Raum. So wirkt die Seite
+        Oliven, Aufstriche, Antipasti und Desserts bekommen mehr Raum. So wirkt die Seite
         näher an dem, was man vor Ort wirklich sieht und schmeckt.
       </p>
       <a routerLink="/ueber-uns" class="btn btn-primary">Mehr über Mediterrano</a>
@@ -146,61 +146,17 @@
   </div>
 </section>
 
-<section id="fruehstueck-home" class="menu-showcase menu-showcase--breakfast" *ngIf="breakfastPreview() as breakfast">
-  <div class="container">
-    <div class="menu-showcase__intro">
-      <div>
-        <p class="section-kicker">Frühstück</p>
-        <h2>{{ breakfast.title }}</h2>
-        <p>{{ breakfast.description }}</p>
-      </div>
-      <a routerLink="/fruehstuecksmenue" class="btn btn-ghost">Ganzes Frühstücksmenü</a>
+<section class="products-teaser">
+  <div class="container products-teaser__inner">
+    <div>
+      <p class="section-kicker">Produkte</p>
+      <h2>Die ganze Auswahl jetzt auf einer Seite.</h2>
+      <p>
+        Statt getrennter Frühstücks- und Mittagsseiten finden Sie alle Produktbereiche jetzt gebündelt unter
+        `Produkte`.
+      </p>
     </div>
-
-    <div class="menu-showcase__grid">
-      <article class="menu-card" *ngFor="let item of breakfast.items | slice:0:4">
-        <div class="menu-card__image" *ngIf="item.imageUrl">
-          <img [src]="item.imageUrl" [alt]="item.name" loading="lazy" />
-        </div>
-        <div class="menu-card__content">
-          <h3>{{ item.name }}</h3>
-          <p *ngIf="item.description">{{ item.description }}</p>
-          <div class="menu-card__meta">
-            <span class="menu-card__price" *ngIf="item.priceLabel">{{ item.priceLabel }}</span>
-            <span class="tag" *ngFor="let t of item.tags">{{ t }}</span>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="mittag-home" class="menu-showcase menu-showcase--lunch" *ngIf="lunchPreview() as lunch">
-  <div class="container">
-    <div class="menu-showcase__intro">
-      <div>
-        <p class="section-kicker">Mittag</p>
-        <h2>{{ lunch.title }}</h2>
-        <p>{{ lunch.description }}</p>
-      </div>
-      <a routerLink="/mittags-menue" class="btn btn-ghost">Ganzes Mittagsmenü</a>
-    </div>
-
-    <div class="menu-showcase__grid">
-      <article class="menu-card" *ngFor="let item of lunch.items | slice:0:4">
-        <div class="menu-card__image" *ngIf="item.imageUrl">
-          <img [src]="item.imageUrl" [alt]="item.name" loading="lazy" />
-        </div>
-        <div class="menu-card__content">
-          <h3>{{ item.name }}</h3>
-          <p *ngIf="item.description">{{ item.description }}</p>
-          <div class="menu-card__meta">
-            <span class="menu-card__price" *ngIf="item.priceLabel">{{ item.priceLabel }}</span>
-            <span class="tag" *ngFor="let t of item.tags">{{ t }}</span>
-          </div>
-        </div>
-      </article>
-    </div>
+    <a routerLink="/produkte" class="btn btn-primary">Zur Produktseite</a>
   </div>
 </section>
 
@@ -252,7 +208,7 @@
       <p class="section-kicker">Vor Ort genießen</p>
       <h2>Kirchstr. 2, 79312 Emmendingen</h2>
       <p>
-        Ob schneller Einkauf, Mittagspause oder mediterranes Frühstück mit Zeit: Mediterrano soll direkt als
+        Ob schneller Einkauf, Café-Pause oder mediterrane Feinkost mit Zeit: Mediterrano soll direkt als
         Genussadresse in Emmendingen erkennbar sein.
       </p>
       <ul class="visit__hours">

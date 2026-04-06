@@ -1,0 +1,37 @@
+﻿<section class="page-hero">
+  <div class="container">
+    <p class="page-hero__kicker">Produkte</p>
+    <h1>Unser Sortiment auf einen Blick.</h1>
+    <p class="page-hero__copy">
+      Hier finden Sie möglichst viele Produkte und Genussbereiche von Mediterrano gesammelt auf einer Seite.
+      Die Auswahl kann saisonal variieren und wird in der Theke laufend frisch ergänzt.
+    </p>
+  </div>
+</section>
+
+<section class="products">
+  <div class="container">
+    <div class="category" *ngFor="let category of categories">
+      <div class="category__header">
+        <h2>{{ category.title }}</h2>
+        <p>{{ category.description }}</p>
+      </div>
+
+      <div class="category__grid">
+        <article class="product-card" *ngFor="let item of category.items">
+          <div class="product-card__image">
+            <img [src]="item.image" [alt]="item.name" loading="lazy" />
+          </div>
+          <div class="product-card__content">
+            <div class="product-card__meta" *ngIf="item.note || item.price">
+              <span class="product-card__note" *ngIf="item.note">{{ item.note }}</span>
+              <span class="product-card__price" *ngIf="item.price">{{ item.price }}</span>
+            </div>
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

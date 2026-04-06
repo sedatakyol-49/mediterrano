@@ -5,49 +5,34 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { ImpressumComponent } from './pages/impressum/impressum.component';
 import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component';
 import { AgbComponent } from './pages/agb/agb.component';
-import { MittagsMenueComponent } from './pages/mittags-menue/mittags-menue.component';
-import { FruehstuecksmenueComponent } from './pages/fruehstuecksmenue/fruehstuecksmenue.component';
+import { ProductsComponent } from './pages/products/products.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Mediterrano Emmendingen | Frühstück, Mittagsmenü, Feinkost',
+    title: 'Mediterrano Emmendingen | Feinkost, Café, Antipasti',
     data: {
       seo: {
-        title: 'Mediterrano Emmendingen | Frühstück, Mittagsmenü, Feinkost',
+        title: 'Mediterrano Emmendingen | Feinkost, Café, Antipasti',
         description:
-          'Mediterrano in Emmendingen bietet mediterranes Frühstück, Mittagsmenüs, Antipasti, Bowls, Feinkost und frisch gepresste Säfte in zentraler Lage.',
+          'Mediterrano in Emmendingen bietet Feinkost, Antipasti, mediterrane Spezialitäten, Café und frisch zubereitete Produkte in zentraler Lage.',
         keywords:
-          'Mediterrano Emmendingen, Frühstück Emmendingen, Mittagsmenü Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, mediterranes Café Emmendingen'
+          'Mediterrano Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, mediterrane Spezialitäten Emmendingen, Café Emmendingen'
       }
     }
   },
   {
-    path: 'mittags-menue',
-    component: MittagsMenueComponent,
-    title: 'Mittagsmenü in Emmendingen | Mediterrano',
+    path: 'produkte',
+    component: ProductsComponent,
+    title: 'Produkte | Mediterrano Emmendingen',
     data: {
       seo: {
-        title: 'Mittagsmenü in Emmendingen | Mediterrano',
+        title: 'Produkte | Mediterrano Emmendingen',
         description:
-          'Täglich frische Mittagsgerichte in Emmendingen: Bowls, Suppen, Antipasti-Teller, Sandwiches und frische Säfte bei Mediterrano.',
+          'Produkte von Mediterrano in Emmendingen: Feinkost, Antipasti, Aufstriche, Oliven und mediterrane Spezialitäten.',
         keywords:
-          'Mittagsmenü Emmendingen, Mittagessen Emmendingen, Bowl Emmendingen, Suppe Emmendingen, Antipasti Emmendingen'
-      }
-    }
-  },
-  {
-    path: 'fruehstuecksmenue',
-    component: FruehstuecksmenueComponent,
-    title: 'Frühstück in Emmendingen | Mediterrano',
-    data: {
-      seo: {
-        title: 'Frühstück in Emmendingen | Mediterrano',
-        description:
-          'Mediterranes und türkisches Frühstück in Emmendingen mit Simit, Menemen, Börek, Aufstrichen, Çay und frisch gepressten Säften.',
-        keywords:
-          'Frühstück Emmendingen, Brunch Emmendingen, türkisches Frühstück Emmendingen, Café Emmendingen, Simit Emmendingen'
+          'Produkte Mediterrano Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, Oliven Emmendingen, mediterrane Spezialitäten Emmendingen'
       }
     }
   },
@@ -59,7 +44,7 @@ export const routes: Routes = [
       seo: {
         title: 'Über Mediterrano in Emmendingen',
         description:
-          'Mehr über Mediterrano in Emmendingen: Familienbetrieb, mediterrane Spezialitäten, regionale Partner und frische hausgemachte Produkte.',
+          'Mehr über Mediterrano in Emmendingen: Familienbetrieb, Branchenerfahrung, mediterrane Spezialitäten und regionale Partner.',
         keywords:
           'Mediterrano Emmendingen, Feinkostladen Emmendingen, mediterrane Spezialitäten Emmendingen'
       }

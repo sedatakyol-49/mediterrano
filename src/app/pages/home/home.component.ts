@@ -1,20 +1,15 @@
-﻿import { Component, computed, inject } from '@angular/core';
-import { NgFor, NgIf, SlicePipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgFor, NgIf, SlicePipe, RouterLink],
+  imports: [NgFor, NgIf, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  private readonly menuService = inject(MenuService);
-  categories = this.menuService.getCategories();
-  readonly breakfastCategoryId = 'fruehstueck';
-  readonly lunchCategoryId = 'mittags-menue';
   mapEnabled = false;
 
   readonly signatureProducts = [
@@ -25,8 +20,8 @@ export class HomeComponent {
       label: 'Hausgemacht'
     },
     {
-      title: 'Bowls & warme Mittagsgerichte',
-      text: 'Reis, Bulgur, Bowls und Tellergerichte für alle, die mittags frisch, ausgewogen und schnell genießen wollen.',
+      title: 'Tagesfrische Auswahl',
+      text: 'Feinkost, Antipasti, Aufstriche und wechselnde Spezialitäten für alle, die Qualität und Geschmack mitnehmen möchten.',
       image: 'assets/mediterrano-gallery/mediterrano-001.jpeg',
       label: 'Täglich frisch'
     },
@@ -40,26 +35,26 @@ export class HomeComponent {
 
   readonly experienceMoments = [
     {
-      overline: 'Früh',
-      title: 'Frühstück mit Seele',
-      text: 'Simit, Menemen, Käse, Oliven, hausgemachte Aufstriche und frische Begleiter für einen echten Genussstart.'
+      overline: 'Vormittags',
+      title: 'Café mit Charakter',
+      text: 'Ein Ort für guten Kaffee, kleine Pausen und mediterrane Genussmomente mitten in Emmendingen.'
     },
     {
-      overline: 'Mittags',
-      title: 'Schnell, frisch, voller Geschmack',
-      text: 'Bowls, Reisgerichte, Teller und Sandwiches sind ideal für Mittagspause, Laufkundschaft und ehrlichen Genuss.'
+      overline: 'Tagsüber',
+      title: 'Feinkost zum Entdecken',
+      text: 'Aufstriche, Antipasti, Oliven und Spezialitäten bringen Vielfalt in den Alltag und auf jede Tafel.'
     },
     {
-      overline: 'Den ganzen Tag',
-      title: 'Feinkost aus der Theke',
-      text: 'Oliven, Aufstriche, gefüllte Spezialitäten, süße Stücke und hausgemachte Klassiker für zuhause oder zum Mitnehmen.'
+      overline: 'Zum Mitnehmen',
+      title: 'Frisch, ehrlich, besonders',
+      text: 'Hausgemachte Produkte, wechselnde Auswahl und mediterrane Klassiker für zuhause oder als Mitbringsel.'
     }
   ];
 
   readonly deliHighlights = [
     {
       title: 'Hausgemachte Aufstriche',
-      text: 'Cremige Dips und Brotaufstriche für Simit, Fladenbrot und Frühstücksplatten.',
+      text: 'Cremige Dips und Brotaufstriche für Simit, Fladenbrot und kleine Genussplatten.',
       image: 'assets/mediterrano-gallery/mediterrano-028.jpeg',
       note: 'frisch aus der Theke'
     },
@@ -89,7 +84,7 @@ export class HomeComponent {
     },
     {
       title: 'Frische Obstbegleiter',
-      text: 'Leichte, frische Komponenten, die besonders gut zu Frühstück und Vital-Angeboten passen.',
+      text: 'Leichte, frische Komponenten, die besonders gut zu Kaffee, Feinkost und saisonalen Produkten passen.',
       image: 'assets/mediterrano-gallery/mediterrano-007.jpeg',
       note: 'leicht & saisonal'
     }
@@ -97,30 +92,30 @@ export class HomeComponent {
 
   readonly packageMenus = [
     {
-      name: 'Frühstückstafel',
-      price: 'ab 22,90 EUR pro Person',
-      audience: 'Für Familie, Freunde und Wochenend-Reservierungen',
-      items: ['Simit und Fladenbrot', 'Käse-, Oliven- und Dip-Auswahl', 'Eiergericht nach Wahl', 'Saft und Çay']
-    },
-    {
-      name: 'Business Lunch Table',
-      price: 'ab 15,90 EUR pro Person',
-      audience: 'Für Teams, Besprechungen und Kanzleien',
-      items: ['1 warmes Hauptgericht', '2 mediterrane Beilagen', 'Brot und hausgemachter Dip', 'Schneller Service']
-    },
-    {
-      name: 'Feinkost Eventplatte',
+      name: 'Feinkostplatte',
       price: 'ab 39,00 EUR pro Platte',
-      audience: 'Für Geburtstage, Büros und kleine Feiern',
-      items: ['Antipasti-Komposition', 'Hausgemachte Aufstriche', 'Oliven und Fingerfood', 'Optional süßer Abschluss']
+      audience: 'Für Familien, Freunde und kleine Feiern',
+      items: ['Antipasti-Komposition', 'Hausgemachte Aufstriche', 'Oliven und Fingerfood', 'Individuell anpassbar']
+    },
+    {
+      name: 'Café & Genussrunde',
+      price: 'auf Anfrage',
+      audience: 'Für Gruppen, Besprechungen und Reservierungen',
+      items: ['Kaffee und Heißgetränke', 'Süße Begleiter', 'Herzhafte Feinkostauswahl', 'Persönliche Abstimmung']
+    },
+    {
+      name: 'Geschenk & Mitnahme',
+      price: 'individuell',
+      audience: 'Für Gastgeber, Events und besondere Anlässe',
+      items: ['Feinkostprodukte nach Wahl', 'Süße Spezialitäten', 'Oliven und Aufstriche', 'Saisonal kombinierbar']
     }
   ];
 
   readonly promisePoints = [
     'Hausgemacht statt beliebig: viele Produkte entstehen frisch in eigener Vorbereitung.',
-    'Breites Sortiment aus Frühstück, Mittag, Feinkost, Theke und Getränken.',
+    'Breites Sortiment aus Feinkost, Theke, Café und mediterranen Spezialitäten.',
     'Mediterrane Handschrift mit regionalem Bezug und ehrlichen Zutaten.',
-    'Ein Ort für schnellen Einkauf, Mittagspause und entspannten Genuss zugleich.'
+    'Ein Ort für schnellen Einkauf, kleine Pausen und entspannten Genuss zugleich.'
   ];
 
   readonly galleryImages = [
@@ -147,20 +142,11 @@ export class HomeComponent {
     },
     {
       src: 'assets/mediterrano-gallery/mediterrano-091.jpeg',
-      alt: 'Mediterrano Frühstücksgericht mit Simit und Ei'
+      alt: 'Mediterrano Spezialitäten aus der Theke'
     }
   ];
-
-  breakfastPreview = computed(() =>
-    this.categories().find((cat) => cat.id === this.breakfastCategoryId)
-  );
-
-  lunchPreview = computed(() =>
-    this.categories().find((cat) => cat.id === this.lunchCategoryId)
-  );
 
   enableMap(): void {
     this.mapEnabled = true;
   }
 }
-

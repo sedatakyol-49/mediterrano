@@ -38,7 +38,7 @@ export class SeoService {
     const pageTitle = seo.title ?? 'Mediterrano Emmendingen';
     const description =
       seo.description ??
-      'Mediterrano in Emmendingen bietet Frühstück, Mittagsmenüs, Feinkost und mediterrane Spezialitäten.';
+      'Mediterrano in Emmendingen bietet Feinkost, Antipasti, mediterrane Spezialitäten und Café.';
     const keywords = seo.keywords ?? 'Mediterrano Emmendingen';
     const canonicalUrl = this.buildCanonicalUrl();
 
@@ -87,11 +87,11 @@ export class SeoService {
       url: this.baseUrl,
       image: `${this.baseUrl}/assets/mediteranno-logo.jpg`,
       description:
-        'Mediterrano in Emmendingen bietet mediterranes Frühstück, Mittagsmenüs, Feinkost, Antipasti, Bowls und frisch gepresste Säfte.',
+        'Mediterrano in Emmendingen bietet Feinkost, Antipasti, mediterrane Spezialitäten, Café und frisch zubereitete Produkte.',
       telephone: '07641 9621359',
       email: 'info@mediterrano-em.de',
       priceRange: 'EUR',
-      servesCuisine: ['Mediterranean', 'Turkish', 'Breakfast', 'Lunch', 'Cafe'],
+      servesCuisine: ['Mediterranean', 'Turkish', 'Cafe', 'Deli'],
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Kirchstr. 2',
