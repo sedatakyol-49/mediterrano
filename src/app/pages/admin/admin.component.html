@@ -1,0 +1,452 @@
+<div class="admin">
+  <header class="admin-header">
+    <a href="/">Mediterrano</a><span>Verwaltung</span
+    ><button *ngIf="user" (click)="logout()" [disabled]="busy">Abmelden</button>
+  </header>
+  <p *ngIf="!ready" role="status" class="notice">Verwaltung wird geladen …</p>
+  <p *ngIf="error" role="alert" class="notice error">{{ error }}</p>
+  <p *ngIf="message" role="status" class="notice success">{{ message }}</p>
+  <form *ngIf="ready && !user" class="login" (ngSubmit)="login()">
+    <h1>Willkommen zurück.</h1>
+    <p>Melden Sie sich an, um Ihre Website zu bearbeiten.</p>
+    <label
+      >E-Mail<input
+        type="email"
+        name="email"
+        autocomplete="username"
+        [(ngModel)]="email"
+        required
+    /></label>
+    <label
+      >Passwort<input
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        [(ngModel)]="password"
+        required
+    /></label>
+    <button class="primary" [disabled]="busy">
+      {{ busy ? "Anmeldung …" : "Anmelden" }}
+    </button>
+  </form>
+  <ng-container *ngIf="user && content">
+    <div class="toolbar">
+      <div>
+        <strong>{{
+          dirty ? "Ungespeicherte Änderungen" : "Entwurf gespeichert"
+        }}</strong
+        ><small>Version {{ revision }} · {{ user }}</small>
+      </div>
+      <div class="actions">
+        <button (click)="reload()" [disabled]="busy">Neu laden</button
+        ><button (click)="exportDraft()">Exportieren</button
+        ><button (click)="preview()" [disabled]="busy">Vorschau</button
+        ><button (click)="save()" [disabled]="busy">Entwurf speichern</button
+        ><button class="primary" (click)="publish()" [disabled]="busy">
+          Veröffentlichen
+        </button>
+      </div>
+    </div>
+    <div class="workspace">
+      <nav aria-label="Verwaltungsbereiche">
+        <button
+          *ngFor="let item of tabs"
+          [class.active]="tab === item.id"
+          (click)="selectTab(item.id)"
+        >
+          {{ item.title }}
+        </button>
+      </nav>
+      <main>
+        <section *ngIf="tab === 'products'">
+          <div class="heading">
+            <h1>Produkte</h1>
+            <button (click)="addProduct()" [disabled]="busy">
+              + Produkt hinzufügen
+            </button>
+          </div>
+          <input
+            class="search"
+            type="search"
+            placeholder="Produkte suchen"
+            aria-label="Produkte suchen"
+            [(ngModel)]="search"
+          />
+          <div class="product-workspace">
+            <div class="product-list">
+              <button
+                *ngFor="let product of products"
+                class="product-row"
+                [class.selected]="selectedProduct?.id === product.id"
+                (click)="selectProduct(product)"
+              >
+                <img
+                  *ngIf="product.image"
+                  [src]="product.image"
+                  alt=""
+                  loading="lazy"
+                /><span
+                  ><strong>{{ product.name }}</strong
+                  ><small
+                    >{{ priceLabel(product) || "Preis auf Anfrage" }} ·
+                    {{ product.visible ? "Sichtbar" : "Ausgeblendet" }}</small
+                  ></span
+                >
+              </button>
+              <p *ngIf="!products.length">Keine Produkte gefunden.</p>
+            </div>
+            <dialog
+              #productEditorDialog
+              class="product-editor-dialog"
+              aria-labelledby="product-editor-title"
+              (keydown.escape)="closeProductEditor()"
+              (cancel)="cancelProductEditor($event)"
+            >
+              <div
+                class="product-editor-dialog__header"
+                *ngIf="selectedProduct as product"
+              >
+                <h2 id="product-editor-title">{{ product.name }}</h2>
+                <button
+                  class="product-editor-dialog__close"
+                  type="button"
+                  (click)="closeProductEditor()"
+                >
+                  Schließen
+                </button>
+              </div>
+              <fieldset
+                class="editor"
+                [disabled]="busy"
+                *ngIf="selectedProduct as product"
+                (input)="dirty = true"
+                (change)="dirty = true"
+              >
+                <label
+                  >Produktname<input
+                    [(ngModel)]="product.name"
+                    maxlength="200"
+                    required /></label
+                ><label
+                  >Kategorie<select [(ngModel)]="product.categoryId">
+                    <option
+                      *ngFor="let category of content.categories"
+                      [value]="category.id"
+                    >
+                      {{ category.title }}
+                    </option>
+                  </select></label
+                ><label
+                  >Beschreibung / Zutaten<textarea
+                    [(ngModel)]="product.description"
+                    rows="4"
+                    maxlength="4000"
+                  ></textarea>
+                </label>
+                <div class="two-columns">
+                  <label
+                    >Preistyp<select [(ngModel)]="product.priceMode">
+                      <option value="fixed">Fester Preis</option>
+                      <option value="person">Pro Person</option>
+                      <option value="weight">Nach Gewicht</option>
+                      <option value="request">Auf Anfrage</option>
+                    </select></label
+                  ><label
+                    *ngIf="
+                      product.priceMode === 'fixed' ||
+                      product.priceMode === 'person'
+                    "
+                    >Preis in Euro<input
+                      type="number"
+                      min="0"
+                      max="100000"
+                      step="0.01"
+                      [ngModel]="
+                        product.priceCents === null
+                          ? null
+                          : product.priceCents / 100
+                      "
+                      (ngModelChange)="setPrice(product, $event)"
+                  /></label>
+                </div>
+                <img
+                  class="image-preview"
+                  *ngIf="product.image"
+                  [src]="product.image"
+                  [alt]="product.imageAlt"
+                />
+                <div class="actions">
+                  <button (click)="chooseProductImage(product)">
+                    Bild auswählen</button
+                  ><button
+                    *ngIf="product.image"
+                    (click)="product.image = ''; dirty = true"
+                  >
+                    Bild entfernen
+                  </button>
+                </div>
+                <label
+                  >Bildbeschreibung<input
+                    [(ngModel)]="product.imageAlt"
+                    maxlength="500"
+                /></label>
+                <label class="check"
+                  ><input type="checkbox" [(ngModel)]="product.visible" />Auf
+                  der Website anzeigen</label
+                ><label class="check"
+                  ><input
+                    type="checkbox"
+                    [(ngModel)]="product.featured"
+                  />Startseite · Empfehlungen</label
+                ><label class="check"
+                  ><input type="checkbox" [(ngModel)]="product.deli" />Startseite
+                  · Feinkostauswahl</label
+                ><label class="check"
+                  ><input
+                    type="checkbox"
+                    [(ngModel)]="product.breakfast"
+                  />Startseite · Frühstückspreise</label
+                >
+                <div class="actions">
+                  <button (click)="move(content.products, product, -1)">
+                    ↑ Nach oben</button
+                  ><button (click)="move(content.products, product, 1)">
+                    ↓ Nach unten</button
+                  ><button class="danger" (click)="removeProduct(product)">
+                    Produkt entfernen
+                  </button>
+                </div>
+              </fieldset>
+            </dialog>
+            <p class="empty" *ngIf="!selectedProduct">
+              Wählen Sie ein Produkt zum Bearbeiten aus.
+            </p>
+          </div>
+        </section>
+        <section *ngIf="tab === 'categories'">
+          <div class="heading">
+            <h1>Kategorien</h1>
+            <button (click)="addCategory()" [disabled]="busy">
+              + Kategorie hinzufügen
+            </button>
+          </div>
+          <fieldset
+            [disabled]="busy"
+            class="category-editor"
+            *ngFor="let category of content.categories"
+            (input)="dirty = true"
+            (change)="dirty = true"
+          >
+            <label
+              >Name<input
+                [(ngModel)]="category.title"
+                maxlength="200"
+                required /></label
+            ><label
+              >Beschreibung<textarea
+                [(ngModel)]="category.description"
+                rows="2"
+                maxlength="2000"
+              ></textarea></label
+            ><label class="check"
+              ><input type="checkbox" [(ngModel)]="category.visible" />Kategorie
+              anzeigen</label
+            >
+            <div class="actions">
+              <button (click)="move(content.categories, category, -1)">
+                ↑ Nach oben</button
+              ><button (click)="move(content.categories, category, 1)">
+                ↓ Nach unten</button
+              ><button class="danger" (click)="removeCategory(category)">
+                Entfernen
+              </button>
+            </div>
+          </fieldset>
+        </section>
+        <section *ngIf="tab === 'media'">
+          <h1>Bilder</h1>
+          <p>
+            Bestehende Fotos und neue Uploads stehen bei Produkten und Seiten
+            zur Auswahl.
+          </p>
+          <div class="upload">
+            <label
+              >Bildbeschreibung<input
+                [(ngModel)]="uploadAlt"
+                maxlength="500" /></label
+            ><label
+              >Foto hochladen · JPG, PNG oder WebP, bis 8 MB<input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                (change)="upload($event)"
+                [disabled]="busy"
+            /></label>
+          </div>
+          <input
+            type="search"
+            aria-label="Bilder suchen"
+            placeholder="Bilder suchen"
+            [(ngModel)]="mediaSearch"
+          />
+          <div class="media-grid">
+            <figure *ngFor="let image of filteredMedia">
+              <img [src]="image.path" [alt]="image.alt" loading="lazy" />
+              <figcaption>{{ image.name }}</figcaption>
+            </figure>
+          </div>
+        </section>
+        <section *ngIf="tab === 'settings' || tab === 'home'">
+          <h1>
+            {{
+              tab === "settings" ? "Betriebsdaten" : "Startseite & Speisekarte"
+            }}
+          </h1>
+          <fieldset
+            [disabled]="busy"
+            class="settings-grid"
+            (input)="dirty = true"
+            (change)="dirty = true"
+          >
+            <div *ngFor="let key of settingKeys">
+              <label
+                >{{ labels[key] || key
+                }}<ng-container *ngIf="!key.endsWith('Image')">
+                  <textarea
+                    [(ngModel)]="content.settings[key]"
+                    rows="2"
+                    maxlength="10000"
+                  ></textarea></ng-container></label
+              ><ng-container *ngIf="key.endsWith('Image')"
+                ><img
+                  class="image-preview"
+                  *ngIf="content.settings[key]"
+                  [src]="content.settings[key]"
+                  alt="Aktuelles Bild"
+                />
+                <div class="actions">
+                  <button (click)="chooseSettingImage(key)">
+                    Bild auswählen</button
+                  ><button (click)="content.settings[key] = ''; dirty = true">
+                    Entfernen
+                  </button>
+                </div></ng-container
+              >
+            </div>
+          </fieldset>
+        </section>
+        <section *ngIf="tab === 'pages'">
+          <h1>Seiten & SEO</h1>
+          <label
+            >Seite auswählen<select [(ngModel)]="selectedPage">
+              <option *ngFor="let page of content.pages" [ngValue]="page">
+                {{ page.id }}
+              </option>
+            </select></label
+          >
+          <fieldset
+            [disabled]="busy"
+            class="page-editor"
+            *ngIf="selectedPage as page"
+            (input)="dirty = true"
+          >
+            <label
+              >Seitentitel für Browser und Suchmaschinen<input
+                [(ngModel)]="page.title"
+                maxlength="200"
+                required /></label
+            ><label
+              >Beschreibung für Suchmaschinen<textarea
+                [(ngModel)]="page.description"
+                rows="3"
+                maxlength="1000"
+              ></textarea></label
+            ><ng-container
+              *ngIf="
+                page.id !== 'home' &&
+                page.id !== 'produkte' &&
+                page.id !== 'kontakt'
+              "
+              ><button (click)="choosePageImage(page)">
+                Foto in die Seite einfügen</button
+              ><label
+                >Seiteninhalt · HTML<textarea
+                  class="html-editor"
+                  [(ngModel)]="page.body"
+                  rows="20"
+                  maxlength="100000"
+                  spellcheck="false"
+                ></textarea>
+              </label>
+              <p>
+                Überschriften, Absätze, Listen und Links werden in der Vorschau
+                dargestellt.
+              </p>
+              <div class="page-preview" [innerHTML]="page.body"></div
+            ></ng-container>
+            <p
+              *ngIf="
+                page.id === 'home' ||
+                page.id === 'produkte' ||
+                page.id === 'kontakt'
+              "
+            >
+              Die sichtbaren Inhalte bearbeiten Sie unter Startseite &
+              Speisekarte, Produkte oder Betriebsdaten.
+            </p>
+          </fieldset>
+        </section>
+      </main>
+    </div>
+  </ng-container>
+  <dialog #picker class="media-picker-dialog" aria-label="Bild auswählen">
+    <div class="heading">
+      <h2>Bild auswählen</h2>
+      <button (click)="picker.close()" aria-label="Bildauswahl schließen">
+        Schließen
+      </button>
+    </div>
+    <input
+      type="search"
+      [(ngModel)]="mediaSearch"
+      placeholder="Bilder suchen"
+      aria-label="Bilder suchen"
+    />
+    <div class="media-grid">
+      <button *ngFor="let image of filteredMedia" (click)="selectImage(image)">
+        <img [src]="image.path" [alt]="image.alt" loading="lazy" /><span>{{
+          image.name
+        }}</span>
+      </button>
+    </div>
+    <p *ngIf="!filteredMedia.length">
+      Keine Bilder gefunden. Neue Fotos können Sie unter „Bilder“ hochladen.
+    </p>
+  </dialog>
+  <dialog
+    #confirmationDialog
+    class="confirmation-dialog"
+    aria-labelledby="confirmation-title"
+    aria-describedby="confirmation-message"
+    (cancel)="cancelConfirmation($event)"
+    (click)="dismissConfirmationOnBackdrop($event)"
+  >
+    <div class="confirmation-dialog__content">
+      <p class="confirmation-dialog__eyebrow">Mediterrano · Verwaltung</p>
+      <h2 id="confirmation-title">{{ confirmation.title }}</h2>
+      <p id="confirmation-message">{{ confirmation.message }}</p>
+      <div class="confirmation-dialog__actions">
+        <button type="button" (click)="resolveConfirmation(false)">
+          Abbrechen
+        </button>
+        <button
+          type="button"
+          class="primary"
+          [class.danger-confirm]="confirmation.tone === 'danger'"
+          (click)="resolveConfirmation(true)"
+        >
+          {{ confirmation.confirmLabel }}
+        </button>
+      </div>
+    </div>
+  </dialog>
+</div>

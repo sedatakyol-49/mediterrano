@@ -1,3 +1,4 @@
+import { ContentService } from '../../services/content.service';
 import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
@@ -8,9 +9,11 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule, NgIf],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.scss'
+  styleUrl: './contact.component.scss',
 })
 export class ContactComponent {
+  readonly site = inject(ContentService);
+  readonly settings = this.site.settings;
   private readonly http = inject(HttpClient);
 
   form = { name: '', email: '', message: '' };
@@ -28,23 +31,27 @@ export class ContactComponent {
     this.submitted = false;
     this.errorMessage = '';
 
-    this.http.post<{ success: boolean; message?: string }>('contact.php', this.form).subscribe({
-      next: (response) => {
-        this.loading = false;
+    this.http
+      .post<{ success: boolean; message?: string }>('/contact.php', this.form)
+      .subscribe({
+        next: (response) => {
+          this.loading = false;
 
-        if (response?.success) {
-          this.submitted = true;
-          this.form = { name: '', email: '', message: '' };
-          return;
-        }
+          if (response?.success) {
+            this.submitted = true;
+            this.form = { name: '', email: '', message: '' };
+            return;
+          }
 
-        this.errorMessage = response?.message || 'Die Nachricht konnte nicht gesendet werden.';
-      },
-      error: () => {
-        this.loading = false;
-        this.errorMessage = 'Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
-      }
-    });
+          this.errorMessage =
+            response?.message || 'Die Nachricht konnte nicht gesendet werden.';
+        },
+        error: () => {
+          this.loading = false;
+          this.errorMessage =
+            'Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.';
+        },
+      });
   }
 
   enableMap(): void {

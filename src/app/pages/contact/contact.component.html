@@ -8,58 +8,63 @@
     <form class="card" (ngSubmit)="submit()" #f="ngForm">
       <label>
         Name
-        <input name="name" [(ngModel)]="form.name" required placeholder="Ihr Name" />
+        <input
+          name="name"
+          [(ngModel)]="form.name"
+          required
+          placeholder="Ihr Name"
+        />
       </label>
       <label>
         E-Mail
-        <input name="email" type="email" [(ngModel)]="form.email" required placeholder="name@mail.de" />
+        <input
+          name="email"
+          type="email"
+          [(ngModel)]="form.email"
+          required
+          placeholder="name@mail.de"
+        />
       </label>
       <label>
         Nachricht
-        <textarea name="message" [(ngModel)]="form.message" rows="5" required placeholder="Ihre Nachricht..."></textarea>
+        <textarea
+          name="message"
+          [(ngModel)]="form.message"
+          rows="5"
+          required
+          placeholder="Ihre Nachricht..."
+        ></textarea>
       </label>
       <button type="submit" [disabled]="loading || !f.valid">
-        {{ loading ? 'Wird gesendet...' : 'Senden' }}
+        {{ loading ? "Wird gesendet..." : "Senden" }}
       </button>
-      <p class="thanks" *ngIf="submitted">Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.</p>
+      <p class="thanks" *ngIf="submitted">
+        Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.
+      </p>
       <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
     </form>
 
     <aside class="card info">
       <h3>Adresse</h3>
-      <p>Kirchstr. 2, 79312 Emmendingen</p>
+      <p>
+        {{ settings()["street"] }}, {{ settings()["postalCode"] }}
+        {{ settings()["city"] }}
+      </p>
 
       <h3>Öffnungszeiten</h3>
-      <ul>
-        <li>Mo-Fr: 09:00-19:00</li>
-        <li>Sa: 09:00-18:00</li>
-      </ul>
+      <p class="multiline">{{ settings()["hours"] }}</p>
 
       <h3>Telefon</h3>
-      <p>07641 9621359</p>
+      <p>{{ settings()["phone"] }}</p>
 
       <h3>E-Mail</h3>
-      <p>info@mediterrano-em.de</p>
+      <p>{{ settings()["email"] }}</p>
 
-      <div class="map-card">
-        <div class="map-consent-card" *ngIf="!mapEnabled">
-          <p class="map-consent-card__eyebrow">Externer Inhalt</p>
-          <h4>Google Maps erst nach Klick laden</h4>
-          <p>
-            Beim Laden der Karte werden personenbezogene Daten an Google übermittelt. Es gelten dann die
-            Datenschutzbestimmungen von Google.
-          </p>
-          <button type="button" (click)="enableMap()">Google Maps laden</button>
-        </div>
-
-        <iframe
-          *ngIf="mapEnabled"
-          title="Google Maps"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2676.6400000000003!2d7.852!3d48.120!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2sEmmendingen!5e0!3m2!1sde!2sde!4v00000000000">
-        </iframe>
-      </div>
+      <p>
+        <a [href]="site.mapsUrl()" target="_blank" rel="noopener"
+          >Route in Google Maps öffnen ↗</a
+        >
+      </p>
     </aside>
   </div>
 </section>

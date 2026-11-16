@@ -1,0 +1,620 @@
+[
+  {
+    "id": "asset-assets-aufstrichteller-jpg",
+    "path": "assets/aufstrichteller.jpg",
+    "name": "aufstrichteller.jpg",
+    "alt": "aufstrichteller.jpg"
+  },
+  {
+    "id": "asset-assets-bowl-jpg",
+    "path": "assets/bowl.jpg",
+    "name": "bowl.jpg",
+    "alt": "bowl.jpg"
+  },
+  {
+    "id": "asset-assets-frehc-getraank-jpg",
+    "path": "assets/frehc getraänk.jpg",
+    "name": "frehc getraänk.jpg",
+    "alt": "frehc getraänk.jpg"
+  },
+  {
+    "id": "asset-assets-fruhstuckteller-jpg",
+    "path": "assets/fruhstückteller.jpg",
+    "name": "fruhstückteller.jpg",
+    "alt": "fruhstückteller.jpg"
+  },
+  {
+    "id": "asset-assets-hamburger-aufstrich-jpg",
+    "path": "assets/hamburger-aufstrich.jpg",
+    "name": "hamburger-aufstrich.jpg",
+    "alt": "hamburger-aufstrich.jpg"
+  },
+  {
+    "id": "asset-assets-mediteranno-logo-jpg",
+    "path": "assets/mediteranno-logo.jpg",
+    "name": "mediteranno-logo.jpg",
+    "alt": "mediteranno-logo.jpg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-001-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-001.jpeg",
+    "name": "mediterrano-001.jpeg",
+    "alt": "Reis oder Bulgur mit Gemüse"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-002-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-002.jpeg",
+    "name": "mediterrano-002.jpeg",
+    "alt": "Antipastiteller"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-003-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-003.jpeg",
+    "name": "mediterrano-003.jpeg",
+    "alt": "Antipasti-Sandwich"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-004-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-004.jpeg",
+    "name": "mediterrano-004.jpeg",
+    "alt": "Mediterranes Minibaguette"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-005-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-005.jpeg",
+    "name": "mediterrano-005.jpeg",
+    "alt": "Bowl mit Hähnchen"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-006-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-006.jpeg",
+    "name": "mediterrano-006.jpeg",
+    "alt": "mediterrano-006.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-007-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-007.jpeg",
+    "name": "mediterrano-007.jpeg",
+    "alt": "Frischer Obstbecher"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-008-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-008.jpeg",
+    "name": "mediterrano-008.jpeg",
+    "alt": "Toastteller"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-009-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-009.jpeg",
+    "name": "mediterrano-009.jpeg",
+    "alt": "Toastteller vegetarisch"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-010-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-010.jpeg",
+    "name": "mediterrano-010.jpeg",
+    "alt": "Bowl vegetarisch"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-011-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-011.jpeg",
+    "name": "mediterrano-011.jpeg",
+    "alt": "mediterrano-011.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-012-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-012.jpeg",
+    "name": "mediterrano-012.jpeg",
+    "alt": "mediterrano-012.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-013-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-013.jpeg",
+    "name": "mediterrano-013.jpeg",
+    "alt": "mediterrano-013.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-014-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-014.jpeg",
+    "name": "mediterrano-014.jpeg",
+    "alt": "mediterrano-014.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-015-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-015.jpeg",
+    "name": "mediterrano-015.jpeg",
+    "alt": "mediterrano-015.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-016-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-016.jpeg",
+    "name": "mediterrano-016.jpeg",
+    "alt": "mediterrano-016.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-017-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-017.jpeg",
+    "name": "mediterrano-017.jpeg",
+    "alt": "mediterrano-017.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-018-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-018.jpeg",
+    "name": "mediterrano-018.jpeg",
+    "alt": "mediterrano-018.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-019-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-019.jpeg",
+    "name": "mediterrano-019.jpeg",
+    "alt": "mediterrano-019.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-020-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-020.jpeg",
+    "name": "mediterrano-020.jpeg",
+    "alt": "mediterrano-020.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-021-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-021.jpeg",
+    "name": "mediterrano-021.jpeg",
+    "alt": "mediterrano-021.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-022-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-022.jpeg",
+    "name": "mediterrano-022.jpeg",
+    "alt": "mediterrano-022.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-023-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-023.jpeg",
+    "name": "mediterrano-023.jpeg",
+    "alt": "mediterrano-023.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-024-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-024.jpeg",
+    "name": "mediterrano-024.jpeg",
+    "alt": "mediterrano-024.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-025-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-025.jpeg",
+    "name": "mediterrano-025.jpeg",
+    "alt": "mediterrano-025.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-026-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-026.jpeg",
+    "name": "mediterrano-026.jpeg",
+    "alt": "mediterrano-026.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-027-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-027.jpeg",
+    "name": "mediterrano-027.jpeg",
+    "alt": "mediterrano-027.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-028-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-028.jpeg",
+    "name": "mediterrano-028.jpeg",
+    "alt": "Hausgemachte Aufstriche"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-029-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-029.jpeg",
+    "name": "mediterrano-029.jpeg",
+    "alt": "mediterrano-029.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-030-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-030.jpeg",
+    "name": "mediterrano-030.jpeg",
+    "alt": "mediterrano-030.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-031-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-031.jpeg",
+    "name": "mediterrano-031.jpeg",
+    "alt": "mediterrano-031.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-032-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-032.jpeg",
+    "name": "mediterrano-032.jpeg",
+    "alt": "mediterrano-032.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-033-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-033.jpeg",
+    "name": "mediterrano-033.jpeg",
+    "alt": "mediterrano-033.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-034-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-034.jpeg",
+    "name": "mediterrano-034.jpeg",
+    "alt": "mediterrano-034.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-035-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-035.jpeg",
+    "name": "mediterrano-035.jpeg",
+    "alt": "mediterrano-035.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-036-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-036.jpeg",
+    "name": "mediterrano-036.jpeg",
+    "alt": "mediterrano-036.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-037-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-037.jpeg",
+    "name": "mediterrano-037.jpeg",
+    "alt": "mediterrano-037.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-038-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-038.jpeg",
+    "name": "mediterrano-038.jpeg",
+    "alt": "mediterrano-038.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-039-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-039.jpeg",
+    "name": "mediterrano-039.jpeg",
+    "alt": "mediterrano-039.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-040-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-040.jpeg",
+    "name": "mediterrano-040.jpeg",
+    "alt": "Olivenvielfalt"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-041-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-041.jpeg",
+    "name": "mediterrano-041.jpeg",
+    "alt": "mediterrano-041.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-042-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-042.jpeg",
+    "name": "mediterrano-042.jpeg",
+    "alt": "mediterrano-042.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-043-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-043.jpeg",
+    "name": "mediterrano-043.jpeg",
+    "alt": "Gefüllte Spezialitäten"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-044-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-044.jpeg",
+    "name": "mediterrano-044.jpeg",
+    "alt": "mediterrano-044.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-045-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-045.jpeg",
+    "name": "mediterrano-045.jpeg",
+    "alt": "mediterrano-045.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-046-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-046.jpeg",
+    "name": "mediterrano-046.jpeg",
+    "alt": "mediterrano-046.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-047-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-047.jpeg",
+    "name": "mediterrano-047.jpeg",
+    "alt": "mediterrano-047.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-048-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-048.jpeg",
+    "name": "mediterrano-048.jpeg",
+    "alt": "mediterrano-048.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-049-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-049.jpeg",
+    "name": "mediterrano-049.jpeg",
+    "alt": "mediterrano-049.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-050-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-050.jpeg",
+    "name": "mediterrano-050.jpeg",
+    "alt": "mediterrano-050.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-051-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-051.jpeg",
+    "name": "mediterrano-051.jpeg",
+    "alt": "mediterrano-051.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-052-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-052.jpeg",
+    "name": "mediterrano-052.jpeg",
+    "alt": "Frischkäserollen"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-053-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-053.jpeg",
+    "name": "mediterrano-053.jpeg",
+    "alt": "mediterrano-053.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-054-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-054.jpeg",
+    "name": "mediterrano-054.jpeg",
+    "alt": "Lokumselektion"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-055-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-055.jpeg",
+    "name": "mediterrano-055.jpeg",
+    "alt": "mediterrano-055.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-056-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-056.jpeg",
+    "name": "mediterrano-056.jpeg",
+    "alt": "mediterrano-056.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-057-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-057.jpeg",
+    "name": "mediterrano-057.jpeg",
+    "alt": "mediterrano-057.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-058-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-058.jpeg",
+    "name": "mediterrano-058.jpeg",
+    "alt": "mediterrano-058.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-059-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-059.jpeg",
+    "name": "mediterrano-059.jpeg",
+    "alt": "mediterrano-059.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-060-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-060.jpeg",
+    "name": "mediterrano-060.jpeg",
+    "alt": "mediterrano-060.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-061-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-061.jpeg",
+    "name": "mediterrano-061.jpeg",
+    "alt": "mediterrano-061.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-062-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-062.jpeg",
+    "name": "mediterrano-062.jpeg",
+    "alt": "mediterrano-062.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-063-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-063.jpeg",
+    "name": "mediterrano-063.jpeg",
+    "alt": "mediterrano-063.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-064-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-064.jpeg",
+    "name": "mediterrano-064.jpeg",
+    "alt": "mediterrano-064.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-065-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-065.jpeg",
+    "name": "mediterrano-065.jpeg",
+    "alt": "mediterrano-065.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-066-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-066.jpeg",
+    "name": "mediterrano-066.jpeg",
+    "alt": "Baklava"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-067-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-067.jpeg",
+    "name": "mediterrano-067.jpeg",
+    "alt": "mediterrano-067.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-068-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-068.jpeg",
+    "name": "mediterrano-068.jpeg",
+    "alt": "mediterrano-068.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-069-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-069.jpeg",
+    "name": "mediterrano-069.jpeg",
+    "alt": "mediterrano-069.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-070-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-070.jpeg",
+    "name": "mediterrano-070.jpeg",
+    "alt": "mediterrano-070.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-071-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-071.jpeg",
+    "name": "mediterrano-071.jpeg",
+    "alt": "mediterrano-071.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-072-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-072.jpeg",
+    "name": "mediterrano-072.jpeg",
+    "alt": "mediterrano-072.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-073-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-073.jpeg",
+    "name": "mediterrano-073.jpeg",
+    "alt": "mediterrano-073.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-074-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-074.jpeg",
+    "name": "mediterrano-074.jpeg",
+    "alt": "mediterrano-074.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-075-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-075.jpeg",
+    "name": "mediterrano-075.jpeg",
+    "alt": "mediterrano-075.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-076-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-076.jpeg",
+    "name": "mediterrano-076.jpeg",
+    "alt": "mediterrano-076.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-077-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-077.jpeg",
+    "name": "mediterrano-077.jpeg",
+    "alt": "mediterrano-077.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-078-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-078.jpeg",
+    "name": "mediterrano-078.jpeg",
+    "alt": "mediterrano-078.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-079-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-079.jpeg",
+    "name": "mediterrano-079.jpeg",
+    "alt": "mediterrano-079.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-080-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-080.jpeg",
+    "name": "mediterrano-080.jpeg",
+    "alt": "mediterrano-080.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-081-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-081.jpeg",
+    "name": "mediterrano-081.jpeg",
+    "alt": "mediterrano-081.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-082-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-082.jpeg",
+    "name": "mediterrano-082.jpeg",
+    "alt": "mediterrano-082.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-083-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-083.jpeg",
+    "name": "mediterrano-083.jpeg",
+    "alt": "mediterrano-083.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-084-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-084.jpeg",
+    "name": "mediterrano-084.jpeg",
+    "alt": "mediterrano-084.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-085-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-085.jpeg",
+    "name": "mediterrano-085.jpeg",
+    "alt": "mediterrano-085.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-086-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-086.jpeg",
+    "name": "mediterrano-086.jpeg",
+    "alt": "mediterrano-086.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-087-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-087.jpeg",
+    "name": "mediterrano-087.jpeg",
+    "alt": "mediterrano-087.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-088-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-088.jpeg",
+    "name": "mediterrano-088.jpeg",
+    "alt": "mediterrano-088.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-089-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-089.jpeg",
+    "name": "mediterrano-089.jpeg",
+    "alt": "mediterrano-089.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-090-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-090.jpeg",
+    "name": "mediterrano-090.jpeg",
+    "alt": "mediterrano-090.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-091-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-091.jpeg",
+    "name": "mediterrano-091.jpeg",
+    "alt": "mediterrano-091.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-092-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-092.jpeg",
+    "name": "mediterrano-092.jpeg",
+    "alt": "mediterrano-092.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-093-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-093.jpeg",
+    "name": "mediterrano-093.jpeg",
+    "alt": "mediterrano-093.jpeg"
+  },
+  {
+    "id": "asset-assets-mediterrano-gallery-mediterrano-094-jpeg",
+    "path": "assets/mediterrano-gallery/mediterrano-094.jpeg",
+    "name": "mediterrano-094.jpeg",
+    "alt": "Bulgursalat"
+  },
+  {
+    "id": "asset-assets-oliven-sorte-jpg",
+    "path": "assets/oliven-sorte.jpg",
+    "name": "oliven-sorte.jpg",
+    "alt": "oliven-sorte.jpg"
+  },
+  {
+    "id": "asset-assets-reise-gemuse-jpg",
+    "path": "assets/reise-gemuse.jpg",
+    "name": "reise-gemuse.jpg",
+    "alt": "reise-gemuse.jpg"
+  },
+  {
+    "id": "asset-assets-toast-jpg",
+    "path": "assets/toast.jpg",
+    "name": "toast.jpg",
+    "alt": "toast.jpg"
+  }
+]

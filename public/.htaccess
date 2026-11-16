@@ -2,6 +2,9 @@
   RewriteEngine On
   RewriteBase /
 
+  # API errors must return their own status, not the Angular HTML shell.
+  RewriteRule ^api(?:/|$) - [L]
+
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d

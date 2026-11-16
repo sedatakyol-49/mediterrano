@@ -1,244 +1,183 @@
 <section class="hero">
-  <div class="container hero__content">
-    <div class="hero__left">
-      <p class="eyebrow">Mediterrano in Emmendingen</p>
-      <h1>Hausgemachte Aufstriche, feine Antipasti und eine große Auswahl an Oliven.</h1>
-      <p class="sub">
-        Mediterrano verbindet Feinkost, Café und mediterrane Spezialitäten zu einem Ort, an dem
-        man frisch entdecken, Produkte mitnehmen und ehrlichen Geschmack erleben kann.
-      </p>
-
-      <div class="hero__actions">
-        <a class="btn btn-primary" routerLink="/produkte">Produkte ansehen</a>
-        <a class="btn btn-ghost" routerLink="/kontakt">Anfrage senden</a>
-      </div>
-
-      <div class="hero__facts">
-        <div class="fact">
-          <strong>20+ Jahre</strong>
-          <span>Branchenerfahrung im Team</span>
-        </div>
-        <div class="fact">
-          <strong>Hausgemacht</strong>
-          <span>Aufstriche, Dips, Antipasti und Feinkost mit eigener Handschrift</span>
-        </div>
-        <div class="fact">
-          <strong>Zentral in Emmendingen</strong>
-          <span>Ideal für Einkauf, Café-Pause und mediterranen Genuss unterwegs</span>
-        </div>
-      </div>
+  <div class="hero-copy">
+    <p class="eyebrow">{{ settings()["heroEyebrow"] }}</p>
+    <h1>
+      {{ settings()["heroTitle"] }}<br /><em class="multiline">{{
+        settings()["heroAccent"]
+      }}</em>
+    </h1>
+    <p class="hero-description">{{ settings()["heroText"] }}</p>
+    <div class="hero-actions">
+      <a class="button" routerLink="/produkte" queryParamsHandling="preserve"
+        >Unsere Speisekarte ↗</a
+      ><a class="text-link" routerLink="/kontakt" queryParamsHandling="preserve"
+        >Besuchen Sie uns</a
+      >
     </div>
-
-    <div class="hero__right">
-      <div class="hero__visual">
-        <article class="hero__main-image">
-          <img src="assets/mediterrano-gallery/mediterrano-002.jpeg" alt="Mediterrano Antipasti Teller mit hausgemachten Spezialitäten" />
-          <div class="hero__caption">
-            <span>Feinkost aus der Theke</span>
-            <strong>Antipasti, Oliven und mediterrane Lieblingsprodukte</strong>
-          </div>
-        </article>
-        <article class="hero__side-card">
-          <img src="assets/mediterrano-gallery/mediterrano-040.jpeg" alt="Mediterrano Olivenauswahl" />
-          <div class="hero__side-copy">
-            <p>Oliven & Theke</p>
-          </div>
-        </article>
-      </div>
-    </div>
+    <p class="hero-address">
+      {{ settings()["street"] }} · {{ settings()["postalCode"] }}
+      {{ settings()["city"] }}
+    </p>
   </div>
+  <figure class="hero-image" *ngIf="settings()['heroImage']">
+    <img
+      [src]="settings()['heroImage']"
+      [alt]="settings()['heroImageAlt']"
+      fetchpriority="high"
+      width="1600"
+      height="1066"
+    />
+    <figcaption>
+      <span>{{ settings()["heroCaptionLabel"] }}</span>{{
+        settings()["heroCaption"]
+      }}
+    </figcaption>
+  </figure>
 </section>
-
-<section class="intro-band">
-  <div class="container intro-band__inner">
-    <p>Von Antipasti und Oliven über Aufstriche und süße Spezialitäten bis zum Café vor Ort: Mediterrano lebt von echter Vielfalt und hausgemachtem Geschmack.</p>
-    <a routerLink="/produkte">Produkte entdecken</a>
-  </div>
-</section>
-
-<section class="signatures">
+<div class="welcome-strip">
   <div class="container">
-    <div class="section-header section-header--left">
-      <p class="section-kicker">Lieblingsbereiche</p>
-      <h2 class="section-title">Mediterrano steht für Frische, Vielfalt und echte Produkte aus der eigenen Handschrift.</h2>
-      <p class="section-subtitle">Nicht nur ein schneller Einkauf, sondern ein Ort für Feinkost, kleine Pausen und besondere Mitnahmeprodukte.</p>
-    </div>
-
-    <div class="signatures__grid">
-      <article class="signature-card" *ngFor="let product of signatureProducts">
-        <div class="signature-card__image">
-          <img [src]="product.image" [alt]="product.title" loading="lazy" />
-        </div>
-        <div class="signature-card__content">
-          <span class="signature-card__label">{{ product.label }}</span>
-          <h3>{{ product.title }}</h3>
-          <p>{{ product.text }}</p>
-        </div>
-      </article>
-    </div>
+    <span *ngFor="let line of settings()['welcomeText'].split('\n')">{{
+      line
+    }}</span>
   </div>
-</section>
-
-<section class="moments">
-  <div class="container moments__grid">
-    <div class="moments__intro">
-      <p class="section-kicker">Produkte & Services</p>
-      <h2>Ein Angebot für den ganzen Tag, nicht nur für einen schnellen Halt.</h2>
-      <p>
-        Mediterrano ist Feinkostladen, Café und Mitnahmeort in einem. Gerade diese Mischung
-        macht das Angebot reich, persönlich und für Emmendingen besonders interessant.
-      </p>
-    </div>
-
-    <div class="moments__cards">
-      <article class="moment-card" *ngFor="let moment of experienceMoments">
-        <span class="moment-card__overline">{{ moment.overline }}</span>
-        <h3>{{ moment.title }}</h3>
-        <p>{{ moment.text }}</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="packages">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-kicker">Angebote</p>
-      <h2 class="section-title">Klare Feinkost- und Genussformate machen Mediterrano noch anfragbarer für Gruppen und besondere Anlässe.</h2>
-      <p class="section-subtitle">So wirkt das Angebot hochwertig, organisiert und direkt anfragbar.</p>
-    </div>
-
-    <div class="packages-grid">
-      <article class="package-card" *ngFor="let pack of packageMenus">
-        <div class="package-card__top">
-          <span class="package-card__label">{{ pack.audience }}</span>
-          <h3>{{ pack.name }}</h3>
-          <p class="package-card__price">{{ pack.price }}</p>
-        </div>
-
-        <ul>
-          <li *ngFor="let item of pack.items">{{ item }}</li>
-        </ul>
-
-        <a routerLink="/kontakt" class="package-card__cta">Angebot anfragen</a>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="gallery">
-  <div class="container gallery__grid">
-    <div class="gallery__text">
-      <p class="section-kicker">Impressionen</p>
-      <h2>Von der herzhaften Theke bis zur süßen Ecke zeigt sich Mediterrano über echte Produktbilder.</h2>
-      <p>
-        Oliven, Aufstriche, Antipasti und Desserts bekommen mehr Raum. So wirkt die Seite
-        näher an dem, was man vor Ort wirklich sieht und schmeckt.
-      </p>
-      <a routerLink="/ueber-uns" class="btn btn-primary">Mehr über Mediterrano</a>
-    </div>
-
-    <div class="gallery__masonry">
-      <figure class="gallery__item" *ngFor="let image of galleryImages" [class.gallery__item--tall]="image.tall">
-        <img [src]="image.src" [alt]="image.alt" loading="lazy" />
-      </figure>
-    </div>
-  </div>
-</section>
-
-<section class="products-teaser">
-  <div class="container products-teaser__inner">
+</div>
+<section class="favourites container" *ngIf="favourites().length">
+  <div class="section-heading">
     <div>
-      <p class="section-kicker">Produkte</p>
-      <h2>Die ganze Auswahl jetzt auf einer Seite.</h2>
-      <p>
-        Statt getrennter Frühstücks- und Mittagsseiten finden Sie alle Produktbereiche jetzt gebündelt unter
-        `Produkte`.
-      </p>
+      <p class="eyebrow">{{ settings()["featuredEyebrow"] }}</p>
+      <h2>{{ settings()["featuredTitle"] }}</h2>
     </div>
-    <a routerLink="/produkte" class="btn btn-primary">Zur Produktseite</a>
+    <a class="text-link" routerLink="/produkte" queryParamsHandling="preserve"
+      >Die ganze Speisekarte ↗</a
+    >
+  </div>
+  <div class="food-grid">
+    <a
+      class="food-card"
+      routerLink="/produkte"
+      queryParamsHandling="preserve"
+      [fragment]="item.categoryId"
+      *ngFor="let item of favourites()"
+      ><div class="food-photo" *ngIf="item.image">
+        <img
+          [src]="item.image"
+          [alt]="item.imageAlt || item.name"
+          loading="lazy"
+          width="1600"
+          height="1066"
+        />
+      </div>
+      <p class="food-category">{{ item.category }}</p>
+      <div class="food-title">
+        <h3>{{ item.name }}</h3>
+        <span>{{ item.price }}</span>
+      </div>
+      <p class="food-description">{{ item.description }}</p></a
+    >
   </div>
 </section>
-
-<section id="feinkost-theke" class="theke">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-kicker">Feinkost & Theke</p>
-      <h2 class="section-title">Aus der Theke kommen viele der Produkte, die Mediterrano besonders machen.</h2>
-      <p class="section-subtitle">Hausgemachte Aufstriche, Oliven, gefüllte Spezialitäten, Feinkostrollen und süße Kleinigkeiten bringen die Vielfalt direkt auf die Startseite.</p>
-    </div>
-
-    <div class="theke__grid">
-      <article class="theke-card" *ngFor="let item of deliHighlights">
-        <div class="theke-card__image">
-          <img [src]="item.image" [alt]="item.title" loading="lazy" />
-        </div>
-        <div class="theke-card__content">
-          <span class="theke-card__note">{{ item.note }}</span>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.text }}</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="promise">
-  <div class="container promise__grid">
-    <div class="promise__copy">
-      <p class="section-kicker">Unser Versprechen</p>
-      <h2>Mehr Charakter, mehr Geschmack, mehr Grund wiederzukommen.</h2>
-      <p>
-        Mediterrano soll online genauso wirken wie vor Ort: warm, ehrlich, qualitätsbewusst und voller Auswahl.
-        Das ist die Basis für eine glaubwürdige Marke, die in Emmendingen hängen bleibt.
-      </p>
-    </div>
-
-    <div class="promise__list">
-      <div class="promise__item" *ngFor="let point of promisePoints">
-        <p>{{ point }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="visit">
-  <div class="container visit__grid">
-    <div class="visit__info">
-      <p class="section-kicker">Vor Ort genießen</p>
-      <h2>Kirchstr. 2, 79312 Emmendingen</h2>
-      <p>
-        Ob schneller Einkauf, Café-Pause oder mediterrane Feinkost mit Zeit: Mediterrano soll direkt als
-        Genussadresse in Emmendingen erkennbar sein.
-      </p>
-      <ul class="visit__hours">
-        <li>Mo-Fr: 09:00-19:00</li>
-        <li>Sa: 09:00-18:00</li>
-      </ul>
-      <div class="visit__cta">
-        <a href="https://maps.google.com/?q=Emmendingen%20Kirchstr%202" target="_blank" rel="noopener" class="btn btn-primary">Route planen</a>
-        <a routerLink="/kontakt" class="btn btn-ghost">Kontakt</a>
-      </div>
-    </div>
-
-    <div class="visit__map">
-      <div class="map-consent-card" *ngIf="!mapEnabled">
-        <p class="map-consent-card__eyebrow">Externer Inhalt</p>
-        <h3>Google Maps erst nach Klick laden</h3>
-        <p>
-          Mit dem Laden der Karte werden Daten an Google übermittelt. Es gelten dann die Datenschutzbestimmungen
-          von Google.
-        </p>
-        <button type="button" class="btn btn-primary" (click)="enableMap()">Google Maps laden</button>
-      </div>
-
-      <iframe
-        *ngIf="mapEnabled"
-        title="Google Maps"
+<section class="breakfast">
+  <div class="container breakfast-grid">
+    <div class="breakfast-visual" *ngIf="settings()['breakfastImage']">
+      <img
+        [src]="settings()['breakfastImage']"
+        [alt]="settings()['breakfastImageAlt']"
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2676.6400000000003!2d7.852!3d48.120!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0:0x0!2sEmmendingen!5e0!3m2!1sde!2sde!4v00000000000">
-      </iframe>
+        width="700"
+        height="700"
+      />
+    </div>
+    <div class="breakfast-copy">
+      <p class="eyebrow">{{ settings()["breakfastEyebrow"] }}</p>
+      <h2 class="multiline">{{ settings()["breakfastTitle"] }}</h2>
+      <p>{{ settings()["breakfastText"] }}</p>
+      <div class="breakfast-line" *ngFor="let item of breakfastSelection()">
+        <span>{{ item.name }}</span><strong>{{ item.price }}</strong>
+      </div>
+      <a
+        class="button button-light"
+        routerLink="/produkte"
+        queryParamsHandling="preserve"
+        fragment="fruehstueck"
+        >Frühstück entdecken ↗</a
+      >
+    </div>
+  </div>
+</section>
+<section class="deli-section container" *ngIf="deliSelection().length">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">{{ settings()["deliEyebrow"] }}</p>
+      <h2 class="multiline">{{ settings()["deliTitle"] }}</h2>
+    </div>
+    <div class="deli-intro">
+      <p>{{ settings()["deliText"] }}</p>
+      <a
+        class="text-link"
+        routerLink="/produkte"
+        queryParamsHandling="preserve"
+        fragment="theke"
+        >Feinkost entdecken ↗</a
+      >
+    </div>
+  </div>
+  <div class="deli-grid">
+    <a
+      *ngFor="let item of deliSelection()"
+      class="deli-card"
+      routerLink="/produkte"
+      queryParamsHandling="preserve"
+      [fragment]="item.categoryId"
+      ><img
+        *ngIf="item.image"
+        [src]="item.image"
+        [alt]="item.imageAlt || item.name"
+        width="1600"
+        height="1066"
+        loading="lazy"
+      />
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.description }}</p></a
+    >
+  </div>
+</section>
+<section class="story container">
+  <div>
+    <p class="eyebrow">{{ settings()["storyEyebrow"] }}</p>
+    <h2 class="multiline">{{ settings()["storyTitle"] }}</h2>
+  </div>
+  <div>
+    <p class="multiline">{{ settings()["storyText"] }}</p>
+    <a class="text-link" routerLink="/ueber-uns" queryParamsHandling="preserve"
+      >Lernen Sie uns kennen ↗</a
+    >
+  </div>
+</section>
+<section class="visit">
+  <div class="container visit-grid">
+    <div>
+      <p class="eyebrow">{{ settings()["visitEyebrow"] }}</p>
+      <h2 class="multiline">{{ settings()["visitTitle"] }}</h2>
+      <a class="button" [href]="site.mapsUrl()" target="_blank" rel="noopener"
+        >Route planen ↗</a
+      >
+    </div>
+    <div class="visit-details">
+      <div>
+        <h3>Hier finden Sie uns</h3>
+        <p>
+          {{ settings()["street"] }}<br />{{ settings()["postalCode"] }}
+          {{ settings()["city"] }}
+        </p>
+      </div>
+      <div>
+        <h3>Öffnungszeiten</h3>
+        <p class="multiline">{{ settings()["hours"] }}</p>
+      </div>
+      <div>
+        <h3>Einfach anrufen</h3>
+        <a [href]="site.phoneUrl()">{{ settings()["phone"] }}</a>
+      </div>
     </div>
   </div>
 </section>

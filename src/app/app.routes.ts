@@ -1,26 +1,31 @@
+import { ContentPageComponent } from './pages/content-page/content-page.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { ImpressumComponent } from './pages/impressum/impressum.component';
-import { DatenschutzComponent } from './pages/datenschutz/datenschutz.component';
-import { AgbComponent } from './pages/agb/agb.component';
 import { ProductsComponent } from './pages/products/products.component';
 
 export const routes: Routes = [
   {
+    path: 'admin',
+    loadComponent: () =>
+      import('./pages/admin/admin.component').then(
+        (module) => module.AdminComponent,
+      ),
+    title: 'Verwaltung | Mediterrano',
+  },
+  {
     path: '',
     component: HomeComponent,
-    title: 'Mediterrano Emmendingen | Feinkost, Café, Antipasti',
+    title: 'Mediterrano Emmendingen | Feinkost, Cafe, Antipasti',
     data: {
       seo: {
-        title: 'Mediterrano Emmendingen | Feinkost, Café, Antipasti',
+        title: 'Mediterrano Emmendingen | Feinkost, Cafe, Antipasti',
         description:
-          'Mediterrano in Emmendingen bietet Feinkost, Antipasti, mediterrane Spezialitäten, Café und frisch zubereitete Produkte in zentraler Lage.',
+          'Mediterrano in Emmendingen bietet Feinkost, Antipasti, mediterrane Spezialitaeten, Cafe und frisch zubereitete Produkte in zentraler Lage.',
         keywords:
-          'Mediterrano Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, mediterrane Spezialitäten Emmendingen, Café Emmendingen'
-      }
-    }
+          'Mediterrano Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, mediterrane Spezialitaeten Emmendingen, Cafe Emmendingen',
+      },
+    },
   },
   {
     path: 'produkte',
@@ -30,25 +35,26 @@ export const routes: Routes = [
       seo: {
         title: 'Produkte | Mediterrano Emmendingen',
         description:
-          'Produkte von Mediterrano in Emmendingen: Feinkost, Antipasti, Aufstriche, Oliven und mediterrane Spezialitäten.',
+          'Produkte von Mediterrano in Emmendingen: Feinkost, Antipasti, Aufstriche, Oliven und mediterrane Spezialitaeten.',
         keywords:
-          'Produkte Mediterrano Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, Oliven Emmendingen, mediterrane Spezialitäten Emmendingen'
-      }
-    }
+          'Produkte Mediterrano Emmendingen, Feinkost Emmendingen, Antipasti Emmendingen, Oliven Emmendingen, mediterrane Spezialitaeten Emmendingen',
+      },
+    },
   },
   {
     path: 'ueber-uns',
-    component: AboutComponent,
-    title: 'Über Mediterrano in Emmendingen',
+    component: ContentPageComponent,
+    title: 'Ueber Mediterrano in Emmendingen',
     data: {
+      pageId: 'ueber-uns',
       seo: {
-        title: 'Über Mediterrano in Emmendingen',
+        title: 'Ueber Mediterrano in Emmendingen',
         description:
-          'Mehr über Mediterrano in Emmendingen: Familienbetrieb, Branchenerfahrung, mediterrane Spezialitäten und regionale Partner.',
+          'Mehr ueber Mediterrano in Emmendingen: Familienbetrieb seit August 2025, Feinkost, Cafe und mediterrane Spezialitaeten.',
         keywords:
-          'Mediterrano Emmendingen, Feinkostladen Emmendingen, mediterrane Spezialitäten Emmendingen'
-      }
-    }
+          'Mediterrano Emmendingen, Feinkostladen Emmendingen, mediterrane Spezialitaeten Emmendingen',
+      },
+    },
   },
   {
     path: 'kontakt',
@@ -58,46 +64,50 @@ export const routes: Routes = [
       seo: {
         title: 'Kontakt & Anfahrt | Mediterrano Emmendingen',
         description:
-          'Kontakt, Öffnungszeiten, Telefonnummer und Anfahrt zu Mediterrano in der Kirchstr. 2, 79312 Emmendingen.',
-        keywords: 'Kontakt Mediterrano Emmendingen, Anfahrt Mediterrano, Öffnungszeiten Emmendingen Café'
-      }
-    }
+          'Kontakt, Oeffnungszeiten, Telefonnummer und Anfahrt zu Mediterrano in der Kirchstr. 2, 79312 Emmendingen.',
+        keywords:
+          'Kontakt Mediterrano Emmendingen, Anfahrt Mediterrano, Oeffnungszeiten Emmendingen Cafe',
+      },
+    },
   },
   {
     path: 'impressum',
-    component: ImpressumComponent,
+    component: ContentPageComponent,
     title: 'Impressum | Mediterrano',
     data: {
+      pageId: 'impressum',
       seo: {
         title: 'Impressum | Mediterrano',
         description: 'Impressum von Mediterrano in Emmendingen.',
-        keywords: 'Impressum Mediterrano'
-      }
-    }
+        keywords: 'Impressum Mediterrano',
+      },
+    },
   },
   {
     path: 'datenschutz',
-    component: DatenschutzComponent,
+    component: ContentPageComponent,
     title: 'Datenschutz | Mediterrano',
     data: {
+      pageId: 'datenschutz',
       seo: {
         title: 'Datenschutz | Mediterrano',
         description: 'Datenschutzhinweise von Mediterrano in Emmendingen.',
-        keywords: 'Datenschutz Mediterrano'
-      }
-    }
+        keywords: 'Datenschutz Mediterrano',
+      },
+    },
   },
   {
     path: 'agb',
-    component: AgbComponent,
+    component: ContentPageComponent,
     title: 'AGB | Mediterrano',
     data: {
+      pageId: 'agb',
       seo: {
         title: 'AGB | Mediterrano',
-        description: 'Allgemeine Geschäftsbedingungen von Mediterrano.',
-        keywords: 'AGB Mediterrano'
-      }
-    }
+        description: 'Allgemeine Geschaeftsbedingungen von Mediterrano.',
+        keywords: 'AGB Mediterrano',
+      },
+    },
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];

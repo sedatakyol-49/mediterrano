@@ -1,6 +1,9 @@
-<app-navbar></app-navbar>
-<main class="content-wrapper">
+<a class="skip-link" href="#main-content">Zum Inhalt springen</a
+><app-navbar *ngIf="!isAdmin"></app-navbar>
+<div class="preview-banner" *ngIf="content.preview() && !isAdmin">
+  Vorschau des gespeicherten Entwurfs · <a href="/admin">Zur Verwaltung</a>
+</div>
+<main id="main-content" class="content-wrapper">
   <router-outlet></router-outlet>
 </main>
-<app-floating-contact></app-floating-contact>
-<app-footer></app-footer>
+<app-footer *ngIf="!isAdmin"></app-footer>

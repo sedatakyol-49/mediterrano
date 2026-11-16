@@ -9,7 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$rawInput = file_get_contents('php://input');
+$rawInput = file_get_contents('php://input', false, null, 0, 20001);
+if ($rawInput === false || strlen($rawInput) > 20000) { http_response_code(413); echo json_encode(['success' => false, 'message' => 'Nachricht zu lang.']); exit; }
 $data = json_decode($rawInput ?: '', true);
 
 if (!is_array($data)) {
@@ -18,7 +19,10 @@ if (!is_array($data)) {
     exit;
 }
 
-$name = trim((string) ($data['name'] ?? ''));
+foreach (['name', 'email', 'message'] as $field) {
+    if (!is_string($data[$field] ?? null)) { http_response_code(422); echo json_encode(['success' => false, 'message' => 'Ungültige Eingabe.']); exit; }
+}
+$name = trim($data['name']);
 $email = trim((string) ($data['email'] ?? ''));
 $message = trim((string) ($data['message'] ?? ''));
 
@@ -34,12 +38,21 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$smtpHost = 'smtp.ionos.de';
-$smtpPort = 587;
-$smtpUser = 'info@mediterrano-em.de';
-$smtpPass = 'KemalTurk1971';
-$fromEmail = 'info@mediterrano-em.de';
-$toEmail = 'info@mediterrano-em.de';
+require dirname(__DIR__) . '/backend/bootstrap.php';
+try {
+    $smtp = config()['smtp'];
+    rateLimit('contact:' . ($_SERVER['REMOTE_ADDR'] ?? 'unknown'), 5, 600);
+} catch (Throwable $exception) {
+    http_response_code(503);
+    echo json_encode(['success' => false, 'message' => 'Kontaktformular momentan nicht verfügbar. Bitte kontaktieren Sie uns telefonisch.']);
+    exit;
+}
+$smtpHost = $smtp['host'];
+$smtpPort = (int) $smtp['port'];
+$smtpUser = $smtp['user'];
+$smtpPass = $smtp['password'];
+$fromEmail = $smtp['from'];
+$toEmail = $smtp['to'];
 $subject = 'Neue Kontaktanfrage von der Website';
 
 $safeName = preg_replace('/[\r\n]+/', ' ', $name) ?: $name;

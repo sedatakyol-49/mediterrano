@@ -1,4 +1,6 @@
-# FrontendMed
+# Mediterrano
+
+Angular site, PHP API ve yönetim paneli. Yerel başlatma ve IONOS kurulumu için [CMS kurulum belgesini](backend/README.md) okuyun.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.5.
 

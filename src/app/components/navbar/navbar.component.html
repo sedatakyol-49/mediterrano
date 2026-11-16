@@ -1,34 +1,118 @@
-<nav class="navbar">
+<nav class="navbar" aria-label="Hauptnavigation" (keydown.escape)="close()">
   <div class="nav__inner">
-    <a class="brand" routerLink="/" (click)="close()">
-      <img src="assets/mediteranno-logo.jpg" alt="Mediterrano Logo" />
+    <a
+      class="brand"
+      routerLink="/"
+      queryParamsHandling="preserve"
+      (click)="close()"
+    >
+      <img
+        [src]="settings()['logoImage']"
+        *ngIf="settings()['logoImage']"
+        alt="Mediterrano Logo"
+      />
       <span class="brand__copy">
-        <strong>Mediterrano</strong>
-        <small>Feinkost. Café. Genuss.</small>
+        <strong>{{ settings()["businessName"] }}</strong>
+        <small>{{ settings()["tagline"] }}</small>
       </span>
     </a>
 
     <ul class="links desktop">
-      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Start</a></li>
-      <li><a routerLink="/produkte" routerLinkActive="active">Produkte</a></li>
-      <li><a routerLink="/ueber-uns" routerLinkActive="active">Über uns</a></li>
-      <li><a routerLink="/kontakt" routerLinkActive="active">Kontakt</a></li>
+      <li>
+        <a
+          routerLink="/"
+          queryParamsHandling="preserve"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Start</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/produkte"
+          queryParamsHandling="preserve"
+          routerLinkActive="active"
+          >Speisekarte</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/ueber-uns"
+          queryParamsHandling="preserve"
+          routerLinkActive="active"
+          >Über uns</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/kontakt"
+          queryParamsHandling="preserve"
+          routerLinkActive="active"
+          >Kontakt</a
+        >
+      </li>
     </ul>
 
-    <a class="nav__cta desktop" href="https://maps.google.com/?q=Emmendingen%20Kirchstr%202" target="_blank" rel="noopener">Besuch planen</a>
+    <a
+      class="nav__cta desktop"
+      [href]="site.mapsUrl()"
+      target="_blank"
+      rel="noopener"
+      >Besuch planen</a
+    >
 
-    <button class="hamburger" type="button" aria-label="Menü" [class.open]="isOpen()" (click)="toggle()">
+    <button
+      class="hamburger"
+      type="button"
+      aria-label="Menü"
+      [attr.aria-expanded]="isOpen()"
+      aria-controls="mobile-navigation"
+      [class.open]="isOpen()"
+      (click)="toggle()"
+    >
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <div class="mobile-menu" [class.open]="isOpen()" (click)="close()">
+  <div
+    id="mobile-navigation"
+    class="mobile-menu"
+    [class.open]="isOpen()"
+    (click)="close()"
+  >
     <div class="mobile-menu__panel" (click)="$event.stopPropagation()">
-      <a routerLink="/" (click)="close()" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Start</a>
-      <a routerLink="/produkte" (click)="close()" routerLinkActive="active">Produkte</a>
-      <a routerLink="/ueber-uns" (click)="close()" routerLinkActive="active">Über uns</a>
-      <a routerLink="/kontakt" (click)="close()" routerLinkActive="active">Kontakt</a>
-      <a href="https://maps.google.com/?q=Emmendingen%20Kirchstr%202" target="_blank" rel="noopener">Besuch planen</a>
+      <a
+        routerLink="/"
+        queryParamsHandling="preserve"
+        (click)="close()"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Start</a
+      >
+      <a
+        routerLink="/produkte"
+        queryParamsHandling="preserve"
+        (click)="close()"
+        routerLinkActive="active"
+        >Speisekarte</a
+      >
+      <a
+        routerLink="/ueber-uns"
+        queryParamsHandling="preserve"
+        (click)="close()"
+        routerLinkActive="active"
+        >Über uns</a
+      >
+      <a
+        routerLink="/kontakt"
+        queryParamsHandling="preserve"
+        (click)="close()"
+        routerLinkActive="active"
+        >Kontakt</a
+      >
+      <a [href]="site.mapsUrl()" target="_blank" rel="noopener"
+        >Besuch planen</a
+      >
     </div>
   </div>
 </nav>
