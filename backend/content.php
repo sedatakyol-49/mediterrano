@@ -104,6 +104,7 @@ function validateContent(array $content): array
     }
     $settings = [];
     $defaults = json_decode(file_get_contents(__DIR__ . '/seed.json'), true, 64, JSON_THROW_ON_ERROR)['settings'];
+    $content['settings']['whatsappNumber'] ??= $defaults['whatsappNumber'];
     foreach ($defaults as $key => $default) {
         $settings[$key] = textField($content['settings'], $key, 10000);
         if (str_ends_with($key, 'Image')) {
@@ -112,6 +113,9 @@ function validateContent(array $content): array
         if (str_ends_with($key, 'Url') && $settings[$key] !== '' && !preg_match('~^https://[^\s]+$~', $settings[$key])) {
             throw new InvalidArgumentException('Bitte eine HTTPS-Adresse eingeben: ' . $key);
         }
+    }
+    if ($settings['whatsappNumber'] !== '' && !preg_match('/^\+?[1-9][0-9]{7,14}$/D', $settings['whatsappNumber'])) {
+        throw new InvalidArgumentException('WhatsApp-Nummer bitte mit Landesvorwahl ohne Leerzeichen eingeben.');
     }
     if (!filter_var($settings['email'], FILTER_VALIDATE_EMAIL)) {
         throw new InvalidArgumentException('Ungültige E-Mail-Adresse.');

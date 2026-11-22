@@ -1,19 +1,20 @@
 <aside class="floating-contact" aria-label="Schnellkontakt">
-  <a routerLink="/kontakt" class="floating-contact__link" aria-label="Kontaktformular öffnen">
-    <span class="material-symbols-rounded">forum</span>
+  <a routerLink="/kontakt" class="floating-contact__link" aria-label="Kontaktformular öffnen" title="Kontaktformular">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 4h16v12H9l-5 4V4Z"/><path d="M8 8h8M8 12h5"/></svg>
   </a>
-  <a [href]="'tel:' + phoneNumber" class="floating-contact__link" aria-label="Jetzt anrufen">
-    <span class="material-symbols-rounded">call</span>
+  <a *ngIf="site.settings()['phone']" [href]="site.phoneUrl()" class="floating-contact__link" aria-label="Jetzt anrufen" title="Anrufen">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="m7 3 3 5-3 2c2 4 3 5 7 7l2-3 5 3-1 4C10 22 2 14 3 4l4-1Z"/></svg>
   </a>
-  <a [href]="'mailto:' + emailAddress" class="floating-contact__link" aria-label="E-Mail senden">
-    <span class="material-symbols-rounded">mail</span>
+  <a *ngIf="site.settings()['email']" [href]="'mailto:' + site.settings()['email']" class="floating-contact__link" aria-label="E-Mail senden" title="E-Mail senden">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6 8 7 8-7"/></svg>
   </a>
   <a
-    [href]="'https://wa.me/' + whatsappNumber"
+    *ngIf="site.whatsappNumber()"
+    [href]="'https://wa.me/' + site.whatsappNumber()"
     target="_blank"
     rel="noopener"
     class="floating-contact__link floating-contact__link--whatsapp"
-    aria-label="WhatsApp Nachricht senden">
+    aria-label="WhatsApp Nachricht senden" title="WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.03 2a9.9 9.9 0 0 0-8.57 14.82L2 22l5.35-1.4A9.96 9.96 0 0 0 12.02 22C17.54 22 22 17.56 22 12.05c0-2.66-1.04-5.16-2.95-7.14Zm-7.03 15.4a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3.18.83.85-3.1-.2-.32a8.25 8.25 0 0 1-1.28-4.38 8.36 8.36 0 0 1 8.35-8.33c2.22 0 4.31.86 5.88 2.44a8.27 8.27 0 0 1 2.45 5.9 8.37 8.37 0 0 1-8.34 8.3Zm4.58-6.25c-.25-.12-1.47-.72-1.7-.8-.23-.09-.4-.12-.57.12-.16.24-.65.8-.8.97-.14.17-.29.19-.54.06a6.82 6.82 0 0 1-2-1.22 7.56 7.56 0 0 1-1.39-1.73c-.14-.24-.01-.37.1-.5.12-.12.24-.3.36-.45.12-.14.16-.24.24-.4.08-.17.04-.3-.02-.43-.06-.12-.57-1.37-.78-1.88-.21-.49-.42-.42-.57-.43h-.49c-.17 0-.44.06-.67.3-.23.24-.88.86-.88 2.1 0 1.24.9 2.44 1.02 2.61.13.17 1.77 2.7 4.29 3.78.6.26 1.08.42 1.45.54.61.2 1.17.17 1.61.1.49-.08 1.47-.6 1.67-1.18.21-.58.21-1.08.14-1.18-.06-.1-.23-.16-.48-.28Z"/>
     </svg>

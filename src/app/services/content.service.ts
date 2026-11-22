@@ -11,6 +11,9 @@ export class ContentService {
   readonly unavailable = signal(false);
   readonly preview = signal(false);
   readonly settings = computed(() => this.content().settings);
+  readonly whatsappNumber = computed(() =>
+    (this.settings()['whatsappNumber'] ?? initialContent.settings.whatsappNumber).replace(/\D/g, ''),
+  );
   readonly products = computed(() => {
     const content = this.content();
     const categories = content.categories.filter(

@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { ContentService } from '../../services/content.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-floating-contact',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgIf],
   templateUrl: './floating-contact.component.html',
   styleUrl: './floating-contact.component.scss'
 })
 export class FloatingContactComponent {
-  readonly phoneNumber = '076419621359';
-  readonly whatsappNumber = '49176419621359';
-  readonly emailAddress = 'info@mediterrano-em.de';
+  readonly site = inject(ContentService);
 }

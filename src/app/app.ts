@@ -5,11 +5,12 @@ import { RouterOutlet, Router } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SeoService } from './services/seo.service';
+import { FloatingContactComponent } from './components/floating-contact/floating-contact.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, NgIf],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent, FloatingContactComponent, NgIf],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

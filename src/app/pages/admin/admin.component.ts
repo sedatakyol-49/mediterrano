@@ -1,3 +1,5 @@
+import initialContent from '../../data/initial-content.json';
+import { InquiriesComponent } from './inquiries.component';
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -10,6 +12,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AdminApiService } from '../../services/admin-api.service';
+import { OperationsComponent } from './operations.component';
 import {
   Category,
   ContentPage,
@@ -22,7 +25,7 @@ import {
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, OperationsComponent, InquiriesComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
 })
@@ -32,13 +35,18 @@ export class AdminComponent implements OnInit {
   @ViewChild('confirmationDialog')
   confirmationDialog!: ElementRef<HTMLDialogElement>;
   @ViewChild('productEditorDialog')
-  productEditorDialog!: ElementRef<HTMLDialogElement>;
+  productEditorDialog?: ElementRef<HTMLDialogElement>;
   email = '';
   password = '';
   user = '';
   ready = false;
   busy = false;
   dirty = false;
+  operationsDirty = false;
+  inquiriesDirty = false;
+  get operationsTab(): boolean {
+    return ['labels', 'offers', 'team', 'inquiries'].includes(this.tab);
+  }
   message = '';
   error = '';
   revision = 0;
@@ -65,11 +73,23 @@ export class AdminComponent implements OnInit {
     { id: 'products', title: 'Produkte' },
     { id: 'categories', title: 'Kategorien' },
     { id: 'media', title: 'Bilder' },
+    { id: 'labels', title: 'Etiketten & Druck' },
+    { id: 'offers', title: 'Angebote' },
+    { id: 'inquiries', title: 'Kundenanfragen' },
+    { id: 'team', title: 'Personal & Zeiten' },
     { id: 'home', title: 'Startseite & Speisekarte' },
     { id: 'pages', title: 'Seiten & SEO' },
     { id: 'settings', title: 'Betriebsdaten' },
   ];
+  get legalPages(): ContentPage[] {
+    return (
+      this.content?.pages.filter((p) =>
+        ['impressum', 'datenschutz', 'agb'].includes(p.id),
+      ) || []
+    );
+  }
   readonly labels: Record<string, string> = {
+    whatsappNumber: 'WhatsApp · internationale Nummer, z. B. 491701234567',
     businessName: 'Name',
     tagline: 'Unterzeile',
     logoImage: 'Logo',
@@ -121,6 +141,7 @@ export class AdminComponent implements OnInit {
     menuNoteText: 'Speisekarte · Hinweistext',
   };
   private readonly businessKeys = [
+    'whatsappNumber',
     'businessName',
     'tagline',
     'logoImage',
@@ -149,7 +170,7 @@ export class AdminComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   beforeUnload(event: BeforeUnloadEvent): void {
-    if (this.dirty) {
+    if (this.dirty || this.operationsDirty || this.inquiriesDirty) {
       event.preventDefault();
       event.returnValue = '';
     }
@@ -190,7 +211,7 @@ export class AdminComponent implements OnInit {
   }
   async logout(): Promise<void> {
     if (
-      this.dirty &&
+      (this.dirty || this.operationsDirty || this.inquiriesDirty) &&
       !(await this.askConfirmation({
         title: 'Abmelden?',
         message:
@@ -206,6 +227,8 @@ export class AdminComponent implements OnInit {
       this.user = '';
       this.content = null;
       this.dirty = false;
+      this.operationsDirty = false;
+      this.inquiriesDirty = false;
     });
   }
   async reload(): Promise<void> {
@@ -306,8 +329,8 @@ export class AdminComponent implements OnInit {
     this.tab = id;
   }
   closeProductEditor(): void {
-    const dialog = this.productEditorDialog.nativeElement;
-    if (dialog.open) dialog.close();
+    const dialog = this.productEditorDialog?.nativeElement;
+    if (dialog?.open) dialog.close();
     this.selectedProduct = null;
   }
   cancelProductEditor(event: Event): void {
@@ -315,8 +338,8 @@ export class AdminComponent implements OnInit {
     this.closeProductEditor();
   }
   private openProductEditor(): void {
-    const dialog = this.productEditorDialog.nativeElement;
-    if (dialog.open) return;
+    const dialog = this.productEditorDialog?.nativeElement;
+    if (!dialog || dialog.open) return;
     if (window.matchMedia('(max-width: 1050px)').matches) dialog.showModal();
     else dialog.show();
   }
@@ -414,8 +437,7 @@ export class AdminComponent implements OnInit {
     this.resolveConfirmation(false);
   }
   dismissConfirmationOnBackdrop(event: MouseEvent): void {
-    if (event.target === event.currentTarget)
-      this.resolveConfirmation(false);
+    if (event.target === event.currentTarget) this.resolveConfirmation(false);
   }
   selectImage(image: MediaItem): void {
     if (this.imageProduct) {
@@ -442,6 +464,14 @@ export class AdminComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    if (
+      !['image/jpeg', 'image/png', 'image/webp'].includes(file.type) ||
+      file.size > 8 * 1024 * 1024
+    ) {
+      this.error = 'Bitte JPG, PNG oder WebP bis 8 MB auswählen.';
+      input.value = '';
+      return;
+    }
     await this.run(async () => {
       const result = await this.api.upload(file, this.uploadAlt);
       this.media.unshift(result.item);
@@ -449,6 +479,28 @@ export class AdminComponent implements OnInit {
       this.uploadAlt = '';
     });
     input.value = '';
+  }
+
+  imageInUse(image: MediaItem): boolean {
+    return !!this.content && JSON.stringify(this.content).includes(image.path);
+  }
+
+  async removeImage(image: MediaItem): Promise<void> {
+    if (this.busy || this.imageInUse(image)) return;
+    if (
+      !(await this.askConfirmation({
+        title: 'Bild aus der Mediathek entfernen?',
+        message: `„${image.name}“ wird aus der Bildauswahl entfernt. Die Originaldatei bleibt als Sicherung erhalten. Bereits veröffentlichte Bilder sind geschützt.`,
+        confirmLabel: 'Bild entfernen',
+        tone: 'danger',
+      }))
+    )
+      return;
+    await this.run(async () => {
+      await this.api.removeMedia(image.id);
+      this.media = this.media.filter((item) => item.id !== image.id);
+      this.message = 'Bild aus der Mediathek entfernt.';
+    });
   }
 
   private async loadDraft(): Promise<void> {
@@ -462,6 +514,7 @@ export class AdminComponent implements OnInit {
     if (this.productEditorDialog?.nativeElement.open)
       this.productEditorDialog.nativeElement.close();
     this.selectedProduct = null;
+    this.content!.settings['whatsappNumber'] ??= initialContent.settings.whatsappNumber;
     this.selectedPage = draft.content.pages[0];
     this.dirty = false;
   }
@@ -472,14 +525,12 @@ export class AdminComponent implements OnInit {
     this.revision = result.revision;
     this.dirty = false;
   }
-  private askConfirmation(
-    confirmation: {
-      title: string;
-      message: string;
-      confirmLabel: string;
-      tone?: 'primary' | 'danger';
-    },
-  ): Promise<boolean> {
+  private askConfirmation(confirmation: {
+    title: string;
+    message: string;
+    confirmLabel: string;
+    tone?: 'primary' | 'danger';
+  }): Promise<boolean> {
     if (this.confirmationResolver) return Promise.resolve(false);
     this.confirmation = {
       ...confirmation,

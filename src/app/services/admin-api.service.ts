@@ -1,6 +1,8 @@
+import { InquiryRevision } from '../models/inquiry';
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { Operations, OperationsRevision } from '../models/operations';
 import {
   AdminSession,
   ContentRevision,
@@ -54,6 +56,39 @@ export class AdminApiService {
     data.append('image', file);
     data.append('alt', alt);
     return this.write('upload', data);
+  }
+  removeMedia(id: string): Promise<{ success: boolean }> {
+    return this.write('media', { id }, 'DELETE');
+  }
+  operations(): Promise<OperationsRevision> {
+    return firstValueFrom(
+      this.http.get<OperationsRevision>('/api/index.php?action=operations'),
+    );
+  }
+  saveOperations(
+    content: Operations,
+    revision: number,
+  ): Promise<OperationsRevision> {
+    return this.write('operations', { content, revision }, 'PUT');
+  }
+
+  inquiries(): Promise<{ items: InquiryRevision[] }> {
+    return firstValueFrom(
+      this.http.get<{ items: InquiryRevision[] }>(
+        '/api/index.php?action=inquiries',
+      ),
+    );
+  }
+  updateInquiry(
+    id: string,
+    revision: number,
+    status: string,
+    notes: string,
+  ): Promise<InquiryRevision> {
+    return this.write('inquiries', { id, revision, status, notes }, 'PUT');
+  }
+  resendInquiry(id: string): Promise<InquiryRevision> {
+    return this.write('inquiry-email', { id });
   }
 
   private async write<T>(

@@ -46,7 +46,39 @@ try {
         $_SESSION['csrf'] = bin2hex(random_bytes(32));
         respond(['user' => $_SESSION['user'], 'csrf' => $_SESSION['csrf']]);
     }
+    if ($action === 'request-offer' && $method === 'POST') {
+        require dirname(__DIR__, 2) . '/backend/inquiries.php';
+        respond(createInquiry(input()), 201);
+    }
     requireAdmin();
+    if ($action === 'inquiries') {
+        require dirname(__DIR__, 2) . '/backend/inquiries.php';
+        if ($method === 'GET') respond(listInquiries());
+        if ($method === 'PUT') {
+            $data = input(); $id = inquiryId($data);
+            $status = textField($data, 'status', 20, true);
+            if (!in_array($status, ['new','contacted','quoted','closed'], true) || !is_int($data['revision'] ?? null)) throw new InvalidArgumentException('Ungültiger Status.');
+            $current = document($id); $record = $current['content'];
+            $record['status'] = $status; $record['notes'] = textField($data, 'notes', 5000);
+            respond(['revision'=>saveDocument($id,$record,$data['revision']), 'content'=>$record]);
+        }
+    }
+    if ($action === 'inquiry-email' && $method === 'POST') {
+        require dirname(__DIR__, 2) . '/backend/inquiries.php';
+        $id = inquiryId(input());
+        rateLimit('inquiry-email:' . $id, 3, 3600);
+        notifyInquiry($id); respond(document($id));
+    }
+    if ($action === 'operations' && in_array($method, ['GET', 'PUT'], true)) {
+        require dirname(__DIR__, 2) . '/backend/operations.php';
+        $current = operationsDocument();
+        if ($method === 'GET') respond($current);
+        $data = input();
+        if (!is_int($data['revision'] ?? null) || !is_array($data['content'] ?? null)) throw new InvalidArgumentException('Ungültige Betriebsdaten.');
+        $content = validateOperations($data['content'], $current['content']);
+        $revision = saveDocument('operations', $content, $data['revision']);
+        respond(['revision'=>$revision, 'content'=>$content]);
+    }
     if ($action === 'logout' && $method === 'POST') {
         $_SESSION = [];
         session_destroy();
@@ -85,6 +117,25 @@ try {
     }
     if ($action === 'media' && $method === 'GET') {
         respond(['items' => database()->query('SELECT id, path, name, alt FROM cms_media ORDER BY created_at DESC, name')->fetchAll()]);
+    }
+    if ($action === 'media' && $method === 'DELETE') {
+        $id = textField(input(), 'id', 80, true);
+        $query = database()->prepare('SELECT path FROM cms_media WHERE id = ?');
+        $query->execute([$id]);
+        $item = $query->fetch();
+        if (!$item) {
+            respond(['message' => 'Das Bild wurde bereits entfernt.'], 404);
+        }
+        // Check both versions, including page HTML and site settings.
+        foreach (['draft', 'published'] as $scope) {
+            $content = document($scope)['content'];
+            if (str_contains(json_encode($content, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR), $item['path'])) {
+                respond(['message' => 'Dieses Bild wird noch im Entwurf oder auf der veröffentlichten Website verwendet. Bitte zuerst dort ersetzen, speichern und veröffentlichen.'], 409);
+            }
+        }
+        database()->prepare('DELETE FROM cms_media WHERE id = ?')->execute([$id]);
+        // Retain original files: old links, cached pages and concurrent drafts stay valid.
+        respond(['success' => true]);
     }
     if ($action === 'upload' && $method === 'POST') {
         require dirname(__DIR__, 2) . '/backend/upload.php';

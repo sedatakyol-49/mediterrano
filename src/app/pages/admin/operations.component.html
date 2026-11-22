@@ -1,0 +1,700 @@
+<section class="operations" *ngIf="active">
+  <header class="section-heading">
+    <div>
+      <span class="eyebrow">MEDITERRANO · BETRIEB</span>
+      <h1>
+        {{
+          tab === "labels"
+            ? "Etiketten & Druck"
+            : tab === "offers"
+              ? "Angebote"
+              : "Personal & Arbeitszeiten"
+        }}
+      </h1>
+      <p>
+        {{
+          tab === "labels"
+            ? "Preise und Produktinformationen für Ihre Theke und Verpackungen."
+            : tab === "offers"
+              ? "Vom ersten Entwurf zum persönlichen Catering-Angebot."
+              : "Ihr Team, geplante Dienste und tatsächlich geleistete Stunden."
+        }}
+      </p>
+    </div>
+    <div class="save-actions">
+      <span>{{
+        dirty ? "Ungespeicherte Änderungen" : "Betriebsdaten gespeichert"
+      }}</span
+      ><button type="button" (click)="exportData()" [disabled]="!data">
+        Sicherung</button
+      ><button type="button" (click)="load()" [disabled]="busy">
+        Neu laden</button
+      ><button
+        type="button"
+        class="primary"
+        (click)="save()"
+        [disabled]="busy || !data || !dirty"
+      >
+        {{ busy ? "Bitte warten …" : "Betriebsdaten speichern" }}
+      </button>
+    </div>
+  </header>
+  <p *ngIf="error" role="alert" class="notice error">{{ error }}</p>
+  <p *ngIf="message" role="status" class="notice success">{{ message }}</p>
+  <p *ngIf="!data" class="empty">
+    {{
+      busy
+        ? "Betriebsdaten werden geladen …"
+        : "Die Betriebsdaten konnten nicht geladen werden. Bitte erneut laden."
+    }}
+  </p>
+  <ng-container *ngIf="data">
+    <div class="module" *ngIf="tab === 'labels'">
+      <div class="collection-tools">
+        <label
+          >Aus Website-Produkt<select [(ngModel)]="productId">
+            <option value="">Freies Etikett</option>
+            <option *ngFor="let p of site.products" [value]="p.id">
+              {{ p.name }}
+            </option>
+          </select></label
+        ><button (click)="addLabel()" [disabled]="busy">
+          + Etikett erstellen</button
+        ><button (click)="addLabel(true)" [disabled]="busy">
+          Mango-Beispiel
+        </button>
+      </div>
+      <div class="split">
+        <aside class="collection">
+          <input
+            type="search"
+            placeholder="Etiketten suchen"
+            aria-label="Etiketten suchen"
+            [(ngModel)]="search"
+          />
+          <div
+            class="label-row"
+            *ngFor="let item of labels"
+            [class.selected]="label?.id === item.id"
+          >
+            <button (click)="label = item" [disabled]="busy">
+              <strong>{{ item.name }}</strong
+              ><small
+                >{{ euros(item.priceCents) }}
+                {{ item.priceBasis === "100g" ? "/ 100 g" : "" }}</small
+              ></button
+            ><label class="copies"
+              >Anzahl<input
+                type="number"
+                min="0"
+                max="200"
+                step="1"
+                [ngModel]="copies[item.id] || 0"
+                (ngModelChange)="copies[item.id] = $event"
+                [attr.aria-label]="'Druckanzahl für ' + item.name"
+            /></label>
+          </div>
+          <p *ngIf="!labels.length" class="empty">
+            Noch keine passenden Etiketten. Erstellen Sie ein Etikett aus einem
+            Produkt oder beginnen Sie mit einer eigenen Vorlage.
+          </p>
+        </aside>
+        <div>
+          <fieldset
+            *ngIf="label as l; else selectLabel"
+            class="panel"
+            [disabled]="busy"
+            (input)="markDirty()"
+            (change)="markDirty()"
+          >
+            <div class="panel-heading">
+              <h2>Etikett bearbeiten</h2>
+              <div class="actions">
+                <button (click)="duplicateLabel()">Duplizieren</button
+                ><button class="danger" (click)="removeLabel()">
+                  Entfernen
+                </button>
+              </div>
+            </div>
+            <div class="grid">
+              <label
+                >Produktname<input
+                  [(ngModel)]="l.name"
+                  maxlength="200" /></label
+              ><label
+                >Zusatz / Sorte<input
+                  [(ngModel)]="l.subtitle"
+                  maxlength="200" /></label
+              ><label
+                >Gestaltung<select [(ngModel)]="l.layout">
+                  <option value="package">Verpackung mit Logo</option>
+                  <option value="counter">Thekenschild</option>
+                  <option value="detail">Langetikett mit Foto</option>
+                </select></label
+              ><label
+                >Preis (€)<input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  [ngModel]="l.priceCents === null ? null : l.priceCents / 100"
+                  (ngModelChange)="setLabelPrice($event)" /></label
+              ><label
+                >Preis gilt für<select [(ngModel)]="l.priceBasis">
+                  <option value="package">Gesamte Packung</option>
+                  <option value="100g">100 g</option>
+                  <option value="100ml">100 ml</option>
+                  <option value="piece">1 Stück</option>
+                </select></label
+              ><label
+                >Nettofüllmenge<input
+                  type="number"
+                  min="0.001"
+                  step="0.001"
+                  [(ngModel)]="l.quantity" /></label
+              ><label
+                >Einheit<select [(ngModel)]="l.unit">
+                  <option>g</option>
+                  <option>ml</option>
+                  <option>Stück</option>
+                </select></label
+              ><label
+                >Mindestens haltbar bis<input
+                  type="date"
+                  [(ngModel)]="l.bestBefore" /></label
+              ><label
+                >Charge / Los<input
+                  [(ngModel)]="l.batch"
+                  maxlength="100" /></label
+              ><label
+                >Herkunft<input [(ngModel)]="l.origin" maxlength="300"
+              /></label>
+            </div>
+            <label
+              >Zutaten<textarea
+                [(ngModel)]="l.ingredients"
+                maxlength="2500"
+                rows="3"
+                placeholder="Angaben aus dem Produktdatenblatt übernehmen"
+              ></textarea></label
+            ><label
+              >Allergene / Spurenhinweise<textarea
+                [(ngModel)]="l.allergens"
+                maxlength="1000"
+                rows="2"
+              ></textarea>
+            </label>
+            <div class="grid">
+              <label
+                >Lagerung<textarea
+                  [(ngModel)]="l.storage"
+                  maxlength="500"
+                ></textarea></label
+              ><label
+                >Nährwerte<textarea
+                  [(ngModel)]="l.nutrition"
+                  maxlength="1000"
+                  placeholder="z. B. Angaben je 100 g aus dem Produktdatenblatt"
+                ></textarea>
+              </label>
+            </div>
+            <label *ngIf="l.layout === 'detail'"
+              >Produktfoto<select [(ngModel)]="l.image">
+                <option value="">Ohne Foto</option>
+                <option *ngFor="let img of media" [value]="img.path">
+                  {{ img.name }}
+                </option>
+              </select></label
+            >
+            <button *ngIf="l.productId" (click)="syncLabel()">
+              Name, Foto und Preis erneut aus Produkt übernehmen
+            </button>
+            <p class="hint">
+              Etiketten behalten ihre gespeicherten Angaben. MHD, Zutaten und
+              Allergene bitte vom konkreten Produkt übernehmen. Der Grundpreis
+              wird aus Preisbasis und Füllmenge berechnet.
+            </p>
+            <div class="label-preview">
+              <img
+                *ngIf="site.settings['logoImage']"
+                [src]="site.settings['logoImage']"
+                alt="Firmenlogo"
+              />
+              <div>
+                <h3>{{ l.name }}</h3>
+                <p>{{ l.subtitle }}</p>
+                <strong>{{ euros(l.priceCents) }}</strong
+                ><span *ngIf="l.priceBasis === '100g'"> / 100 g</span>
+                <p *ngIf="l.quantity && l.priceBasis === 'package'">
+                  Inhalt: {{ l.quantity }} {{ l.unit }}
+                </p>
+                <p *ngIf="basePrice(l) !== null">
+                  Grundpreis: {{ euros(basePrice(l)) }} /
+                  {{ l.unit === "ml" || l.priceBasis === "100ml" ? "l" : "kg" }}
+                </p>
+                <p *ngIf="l.bestBefore">
+                  Mindestens haltbar bis: {{ germanDate(l.bestBefore) }}
+                </p>
+              </div>
+            </div>
+          </fieldset>
+          <ng-template #selectLabel
+            ><div class="panel empty">
+              <h2>Ihre Etikettensammlung</h2>
+              <p>
+                Wählen Sie links ein Etikett zum Bearbeiten. Die Anzahl
+                bestimmt, wie oft es auf dem A4-Bogen erscheint.
+              </p>
+            </div></ng-template
+          >
+          <div class="panel print-panel">
+            <h2>A4-Druckbogen</h2>
+            <label
+              >Maßvorlage<select
+                (change)="layoutPreset($any($event.target).value)"
+              >
+                <option value="package">Verpackung · 70 × 50 mm</option>
+                <option value="small">Theke · 70 × 37 mm</option>
+                <option value="wide">2 × 7 · 99 × 38 mm</option>
+                <option value="detail">Langetiketten · 190 × 65 mm</option>
+              </select></label
+            >
+            <div class="grid four">
+              <label
+                >Breite (mm)<input
+                  type="number"
+                  min="40"
+                  max="190"
+                  step="0.1"
+                  [(ngModel)]="printSettings.width" /></label
+              ><label
+                >Höhe (mm)<input
+                  type="number"
+                  min="25"
+                  max="277"
+                  step="0.1"
+                  [(ngModel)]="printSettings.height" /></label
+              ><label
+                >Rand (mm)<input
+                  type="number"
+                  min="0"
+                  max="25"
+                  step="0.1"
+                  [(ngModel)]="printSettings.margin" /></label
+              ><label
+                >Abstand (mm)<input
+                  type="number"
+                  min="0"
+                  max="15"
+                  step="0.1"
+                  [(ngModel)]="printSettings.gap"
+              /></label>
+            </div>
+            <p class="hint">
+              Maße mit dem Etikettenbogen abgleichen. Bei 100 % drucken, ohne
+              automatische Anpassung. Vor dem Etikettenbogen einen Test auf
+              Normalpapier machen.
+            </p>
+            <button
+              class="primary"
+              (click)="printLabels()"
+              [disabled]="busy || !selectedCopies || dirty"
+            >
+              {{ selectedCopies }} Etiketten · Druckvorschau / PDF</button
+            ><small *ngIf="dirty"
+              >Bitte Änderungen vor dem Drucken speichern.</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module" *ngIf="tab === 'offers'">
+      <div class="collection-tools">
+        <button class="primary" (click)="addOffer()" [disabled]="busy">
+          + Neues Angebot</button
+        ><button (click)="addOffer(true)" [disabled]="busy">
+          Catering-Muster · 35 Personen</button
+        ><input
+          type="search"
+          placeholder="Nummer, Kunde oder Titel suchen"
+          aria-label="Angebote suchen"
+          [(ngModel)]="search"
+        />
+      </div>
+      <div class="split">
+        <aside class="collection">
+          <button
+            class="offer-row"
+            *ngFor="let item of offers"
+            (click)="offer = item"
+            [class.selected]="offer?.id === item.id"
+            [disabled]="busy"
+          >
+            <span class="row-meta"
+              >{{ item.number || "Neue Nummer nach Speichern" }}
+              <span class="badge">{{ statusLabels[item.status] }}</span></span
+            ><strong>{{ item.customer || "Kunde noch offen" }}</strong
+            ><span>{{ item.title }}</span
+            ><small
+              >{{ germanDate(item.date) }} · {{ euros(totals(item).gross)
+              }}{{ totals(item).complete ? "" : " · Steuer offen" }}</small
+            >
+          </button>
+          <p *ngIf="!offers.length" class="empty">
+            Noch keine Angebote. Beginnen Sie mit einer leeren Vorlage oder dem
+            Catering-Muster.
+          </p>
+        </aside>
+        <fieldset
+          class="panel"
+          *ngIf="offer as o; else selectOffer"
+          [disabled]="busy"
+          (input)="markDirty()"
+          (change)="markDirty()"
+        >
+          <div class="panel-heading">
+            <div>
+              <span class="eyebrow">{{ o.number || "ANGEBOTSENTWURF" }}</span>
+              <h2>{{ o.title }}</h2>
+            </div>
+            <div class="actions">
+              <button (click)="duplicateOffer()">Duplizieren</button
+              ><button
+                class="primary"
+                (click)="printOffer()"
+                [disabled]="dirty"
+              >
+                Vorschau / PDF
+              </button>
+            </div>
+          </div>
+          <div class="grid">
+            <label>Titel<input [(ngModel)]="o.title" maxlength="200" /></label
+            ><label
+              >Status<select [(ngModel)]="o.status">
+                <option
+                  *ngFor="
+                    let status of [
+                      'draft',
+                      'sent',
+                      'accepted',
+                      'declined',
+                      'archived',
+                    ]
+                  "
+                  [value]="status"
+                >
+                  {{ statusLabels[status] }}
+                </option>
+              </select></label
+            ><label
+              >Kunde / Firma<input
+                [(ngModel)]="o.customer"
+                maxlength="250"
+                autocomplete="off" /></label
+            ><label
+              >Kunden-E-Mail<input
+                type="email"
+                [(ngModel)]="o.email"
+                maxlength="190"
+                autocomplete="off" /></label
+            ><label class="full"
+              >Kundenanschrift<textarea
+                [(ngModel)]="o.address"
+                maxlength="1000"
+                rows="3"
+              ></textarea></label
+            ><label
+              >Angebotsdatum<input type="date" [(ngModel)]="o.date" /></label
+            ><label
+              >Gültig bis<input type="date" [(ngModel)]="o.validUntil" /></label
+            ><label
+              >Veranstaltungsdatum<input
+                type="date"
+                [(ngModel)]="o.eventDate" /></label
+            ><label
+              >Personenzahl<input
+                type="number"
+                min="0"
+                step="1"
+                [(ngModel)]="o.guests"
+            /></label>
+          </div>
+          <label
+            >Einleitung<textarea
+              [(ngModel)]="o.introduction"
+              maxlength="3000"
+              rows="3"
+            ></textarea>
+          </label>
+          <div class="panel-heading">
+            <h3>Leistungen & Preise</h3>
+            <label
+              >Positionspreise<select [(ngModel)]="o.priceMode">
+                <option value="gross">Brutto (inkl. MwSt.)</option>
+                <option value="net">Netto (zzgl. MwSt.)</option>
+              </select></label
+            >
+          </div>
+          <p class="hint">
+            Beim Wechsel Netto/Brutto bleiben die eingegebenen Einzelpreise
+            gleich. Den zutreffenden Steuersatz je Position auswählen.
+          </p>
+          <label class="check"><input type="checkbox" [ngModel]="o.showImages !== false" (ngModelChange)="o.showImages = $event">Produktfotos im Angebot anzeigen</label>
+          <p class="hint">Produkte und manuelle Leistungen lassen sich frei kombinieren. Name, Beschreibung und Preis können Sie für dieses Angebot ändern; der Produktkatalog bleibt unverändert.</p>
+          <div class="offer-line" *ngFor="let line of o.lines; let i = index">
+            <label class="line-name"
+              >{{ i + 1 }} · Leistung<input
+                [(ngModel)]="line.name"
+                maxlength="500" /></label
+            ><label
+              >Menge<input
+                type="number"
+                min="0.001"
+                step="0.001"
+                [(ngModel)]="line.quantity" /></label
+            ><label
+              >Einheit<input [(ngModel)]="line.unit" maxlength="40" /></label
+            ><label
+              >Einzelpreis (€)<input
+                type="number"
+                min="0"
+                step="0.01"
+                [ngModel]="line.unitCents / 100"
+                (ngModelChange)="setLinePrice(line, $event)" /></label
+            ><label
+              >MwSt.<select [(ngModel)]="line.taxRate">
+                <option [ngValue]="null">Bitte wählen</option>
+                <option [ngValue]="0">0 %</option>
+                <option [ngValue]="7">7 %</option>
+                <option [ngValue]="19">19 %</option>
+              </select></label
+            >
+            <div class="line-total">
+              <strong>{{ euros(line.quantity * line.unitCents) }}</strong
+              ><button
+                class="danger"
+                (click)="removeLine(line)"
+                [attr.aria-label]="line.name + ' entfernen'"
+              >
+                Entfernen
+              </button>
+            </div>
+            <label class="line-name">Beschreibung (optional)<textarea [(ngModel)]="line.description" maxlength="2000" rows="2"></textarea></label>
+            <div class="line-media">
+              <img *ngIf="line.image" [src]="line.image" [alt]="line.name" class="offer-thumbnail">
+              <div><label>Foto (optional)<select [(ngModel)]="line.image"><option value="">Ohne Foto</option><option *ngFor="let img of media" [value]="img.path">{{ img.name }}</option></select></label>
+                <label>Eigenes Foto hochladen<input type="file" accept="image/jpeg,image/png,image/webp" (change)="uploadLineImage(line, $event)"></label>
+                <button *ngIf="line.image" type="button" (click)="line.image = ''; markDirty()">Foto aus Position entfernen</button>
+                <small *ngIf="o.showImages === false">Fotos bleiben gespeichert, erscheinen aber nicht im Ausdruck.</small>
+              </div>
+            </div>
+          </div>
+          <div class="collection-tools">
+            <label
+              >Produkt übernehmen<select [(ngModel)]="offerProductId">
+                <option value="">Produkt auswählen</option>
+                <option *ngFor="let p of site.products" [value]="p.id">
+                  {{ p.name }}
+                </option>
+              </select></label
+            ><button (click)="addLine()" [disabled]="!offerProductId">+ Aus Produkt übernehmen</button>
+            <button (click)="addLine(true)">+ Manuelle Position</button>
+          </div>
+          <div class="totals" *ngIf="totals(o) as sum">
+            <p>
+              <span>Nettosumme</span><strong>{{ euros(sum.net) }}</strong>
+            </p>
+            <p *ngFor="let tax of sum.taxes">
+              <span>MwSt. {{ tax[0] }} %</span><span>{{ euros(tax[1]) }}</span>
+            </p>
+            <p class="grand">
+              <span>Gesamt</span><strong>{{ euros(sum.gross) }}</strong>
+            </p>
+            <small *ngIf="!sum.complete"
+              >Vorläufig: Mindestens ein Steuersatz fehlt.</small
+            >
+          </div>
+          <label
+            >Konditionen / Zahlung / Lieferung<textarea
+              [(ngModel)]="o.terms"
+              maxlength="3000"
+              rows="4"
+              placeholder="Lieferort, Zahlungsbedingungen und weitere Vereinbarungen"
+            ></textarea>
+          </label>
+          <details>
+            <summary>Absender auf diesem Angebot</summary>
+            <label
+              >Firmenname<input
+                [(ngModel)]="o.company"
+                maxlength="250" /></label
+            ><label
+              >Firmenanschrift<textarea
+                [(ngModel)]="o.companyAddress"
+                maxlength="1000"
+              ></textarea></label
+            ><label
+              >Kontakt<textarea
+                [(ngModel)]="o.companyContact"
+                maxlength="1000"
+              ></textarea>
+            </label>
+          </details>
+          <label
+            >Interne Notiz · erscheint nicht im Angebot<textarea
+              [(ngModel)]="o.notes"
+              maxlength="2000"
+              rows="2"
+            ></textarea>
+          </label>
+          <p class="hint">
+            Speichern vergibt die Angebotsnummer. Der Status „Versendet“
+            dokumentiert einen bereits erfolgten Versand; es wird keine E-Mail
+            automatisch verschickt.
+          </p>
+        </fieldset>
+        <ng-template #selectOffer
+          ><div class="panel empty">
+            <h2>Persönlich anbieten.</h2>
+            <p>
+              Wählen Sie ein Angebot oder erstellen Sie ein neues. Kunden,
+              Positionen und Konditionen bleiben für jedes Angebot gespeichert.
+            </p>
+          </div></ng-template
+        >
+      </div>
+    </div>
+    <div class="module" *ngIf="tab === 'team'">
+      <div class="panel">
+        <div class="panel-heading">
+          <h2>Team</h2>
+          <button (click)="addEmployee()" [disabled]="busy">
+            + Person hinzufügen
+          </button>
+        </div>
+        <fieldset
+          [disabled]="busy"
+          (input)="markDirty()"
+          (change)="markDirty()"
+        >
+          <div class="employee-row" *ngFor="let employee of data.employees">
+            <label
+              >Name<input [(ngModel)]="employee.name" maxlength="200" /></label
+            ><label
+              >Aufgabe / Rolle<input
+                [(ngModel)]="employee.role"
+                maxlength="150" /></label
+            ><label
+              >Wochenstunden (Soll)<input
+                type="number"
+                min="0"
+                max="168"
+                step="0.25"
+                [(ngModel)]="employee.weeklyHours" /></label
+            ><label class="check"
+              ><input
+                type="checkbox"
+                [(ngModel)]="employee.active"
+              />Aktiv</label
+            >
+          </div>
+        </fieldset>
+        <p *ngIf="!data.employees.length" class="empty">
+          Legen Sie die erste Person an, um Dienste und Arbeitszeiten zu
+          erfassen.
+        </p>
+      </div>
+      <div class="panel">
+        <div class="panel-heading">
+          <h2>Arbeitszeiten</h2>
+          <div class="actions">
+            <button
+              (click)="exportHours()"
+              [disabled]="!shifts.length || dirty"
+            >
+              CSV exportieren</button
+            ><button class="primary" (click)="addShift()" [disabled]="busy">
+              + Zeit erfassen
+            </button>
+          </div>
+        </div>
+        <div class="grid four filters">
+          <label>Monat<input type="month" [(ngModel)]="month" /></label
+          ><label
+            >Person<select [(ngModel)]="employeeFilter">
+              <option value="">Alle Personen</option>
+              <option
+                *ngFor="let employee of data.employees"
+                [value]="employee.id"
+              >
+                {{ employee.name }}
+              </option>
+            </select></label
+          ><label
+            >Ansicht<select [(ngModel)]="shiftKind">
+              <option value="planned">Geplante Dienste</option>
+              <option value="actual">Tatsächliche Arbeitszeit</option>
+            </select></label
+          >
+          <div class="hours-total">
+            <small>Summe der Auswahl</small><strong>{{ totalHours }} h</strong>
+          </div>
+        </div>
+        <p class="hint">
+          Zeitzone: Europe/Berlin. Nachtschichten mit dem tatsächlichen
+          Folgedatum erfassen; Zuordnung zum Monat nach Schichtbeginn. Pausen
+          werden abgezogen. Plan und Ist bleiben getrennt. Doppelte Uhrzeiten
+          bei der Herbst-Zeitumstellung gesondert prüfen.
+        </p>
+        <fieldset
+          [disabled]="busy"
+          (input)="markDirty()"
+          (change)="markDirty()"
+        >
+          <div class="shift-row" *ngFor="let shift of shifts">
+            <label
+              >Person<select [(ngModel)]="shift.employeeId">
+                <option
+                  *ngFor="let employee of data.employees"
+                  [value]="employee.id"
+                >
+                  {{ employee.name }}
+                </option>
+              </select></label
+            ><label
+              >Beginn<input
+                type="datetime-local"
+                [(ngModel)]="shift.start" /></label
+            ><label
+              >Ende<input
+                type="datetime-local"
+                [(ngModel)]="shift.end" /></label
+            ><label
+              >Pause (Min.)<input
+                type="number"
+                min="0"
+                step="1"
+                [(ngModel)]="shift.breakMinutes" /></label
+            ><label
+              >Art<select [(ngModel)]="shift.kind">
+                <option value="planned">Plan</option>
+                <option value="actual">Ist</option>
+              </select></label
+            ><label
+              >Notiz<input [(ngModel)]="shift.note" maxlength="500"
+            /></label>
+            <div class="line-total">
+              <strong>{{ hours(shift) }} h</strong
+              ><button class="danger" (click)="removeShift(shift)">
+                Entfernen
+              </button>
+            </div>
+          </div>
+        </fieldset>
+        <p *ngIf="!shifts.length" class="empty">
+          Keine Arbeitszeiten für diese Auswahl.
+        </p>
+      </div>
+    </div>
+  </ng-container>
+</section>

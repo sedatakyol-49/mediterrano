@@ -30,7 +30,7 @@
     </button>
   </form>
   <ng-container *ngIf="user && content">
-    <div class="toolbar">
+    <div class="toolbar" *ngIf="!operationsTab">
       <div>
         <strong>{{
           dirty ? "Ungespeicherte Änderungen" : "Entwurf gespeichert"
@@ -58,6 +58,17 @@
         </button>
       </nav>
       <main>
+        <app-inquiries
+          [hidden]="tab !== 'inquiries'"
+          [active]="tab === 'inquiries'"
+          (dirtyChange)="inquiriesDirty = $event"
+        ></app-inquiries>
+        <app-operations
+          [tab]="tab"
+          [site]="content"
+          [media]="media"
+          (dirtyChange)="operationsDirty = $event"
+        ></app-operations>
         <section *ngIf="tab === 'products'">
           <div class="heading">
             <h1>Produkte</h1>
@@ -199,8 +210,10 @@
                     [(ngModel)]="product.featured"
                   />Startseite · Empfehlungen</label
                 ><label class="check"
-                  ><input type="checkbox" [(ngModel)]="product.deli" />Startseite
-                  · Feinkostauswahl</label
+                  ><input
+                    type="checkbox"
+                    [(ngModel)]="product.deli"
+                  />Startseite · Feinkostauswahl</label
                 ><label class="check"
                   ><input
                     type="checkbox"
@@ -264,23 +277,41 @@
           </fieldset>
         </section>
         <section *ngIf="tab === 'media'">
-          <h1>Bilder</h1>
+          <div class="media-heading">
+            <div>
+              <h1>Bilder</h1>
+              <p>{{ media.length }} Fotos in der Mediathek</p>
+            </div>
+            <button
+              type="button"
+              class="primary"
+              (click)="mediaUpload.click()"
+              [disabled]="busy"
+            >
+              {{ busy ? "Bitte warten …" : "+ Bild hinzufügen" }}
+            </button>
+          </div>
           <p>
             Bestehende Fotos und neue Uploads stehen bei Produkten und Seiten
             zur Auswahl.
           </p>
           <div class="upload">
             <label
-              >Bildbeschreibung<input
-                [(ngModel)]="uploadAlt"
-                maxlength="500" /></label
-            ><label
-              >Foto hochladen · JPG, PNG oder WebP, bis 8 MB<input
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                (change)="upload($event)"
-                [disabled]="busy"
+              >Bildbeschreibung<input [(ngModel)]="uploadAlt" maxlength="500"
             /></label>
+            <p>
+              JPG, PNG oder WebP · bis 8 MB · maximal 20 Megapixel.<br />Neue
+              Bilder können anschließend bei Produkten und Seiten ausgewählt
+              werden.
+            </p>
+            <input
+              #mediaUpload
+              hidden
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              (change)="upload($event)"
+              [disabled]="busy"
+            />
           </div>
           <input
             type="search"
@@ -292,8 +323,30 @@
             <figure *ngFor="let image of filteredMedia">
               <img [src]="image.path" [alt]="image.alt" loading="lazy" />
               <figcaption>{{ image.name }}</figcaption>
+              <div class="media-actions">
+                <span>{{
+                  imageInUse(image)
+                    ? "Im Entwurf verwendet"
+                    : "Zur Auswahl verfügbar"
+                }}</span>
+                <button
+                  type="button"
+                  class="danger"
+                  [disabled]="busy || imageInUse(image)"
+                  (click)="removeImage(image)"
+                  [attr.aria-label]="
+                    image.name + ' aus der Mediathek entfernen'
+                  "
+                >
+                  Entfernen
+                </button>
+              </div>
             </figure>
           </div>
+          <p *ngIf="!filteredMedia.length" class="media-empty">
+            Keine Bilder gefunden. Ändern Sie die Suche oder fügen Sie ein neues
+            Bild hinzu.
+          </p>
         </section>
         <section *ngIf="tab === 'settings' || tab === 'home'">
           <h1>
@@ -333,6 +386,56 @@
               >
             </div>
           </fieldset>
+        </section>
+        <section *ngIf="tab === 'settings'" class="legal-settings">
+          <h2>Rechtliche Angaben</h2>
+          <p>
+            Impressum, Datenschutz und AGB für Ihre Website. Änderungen werden
+            über „Entwurf speichern“ und „Veröffentlichen“ übernommen.
+          </p>
+          <details *ngFor="let page of legalPages">
+            <summary>
+              {{
+                page.id === "impressum"
+                  ? "Impressum"
+                  : page.id === "datenschutz"
+                    ? "Datenschutz"
+                    : "AGB"
+              }}
+            </summary>
+            <fieldset
+              [disabled]="busy"
+              class="page-editor"
+              (input)="dirty = true"
+            >
+              <label
+                >Seitentitel<input
+                  [(ngModel)]="page.title"
+                  maxlength="200"
+                  required
+              /></label>
+              <label
+                >Beschreibung<textarea
+                  [(ngModel)]="page.description"
+                  maxlength="1000"
+                  rows="2"
+                ></textarea>
+              </label>
+              <label
+                >Seiteninhalt · HTML<textarea
+                  [(ngModel)]="page.body"
+                  rows="16"
+                  maxlength="100000"
+                ></textarea>
+              </label>
+              <p>
+                Absätze mit &lt;p&gt;, Überschriften mit &lt;h2&gt; und Listen
+                mit &lt;ul&gt; formatieren. Die Vorschau zeigt den sichtbaren
+                Inhalt.
+              </p>
+              <div class="page-preview" [innerHTML]="page.body"></div>
+            </fieldset>
+          </details>
         </section>
         <section *ngIf="tab === 'pages'">
           <h1>Seiten & SEO</h1>

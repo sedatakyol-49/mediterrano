@@ -12,7 +12,7 @@ return [
         'host' => 'smtp.ionos.de',
         'port' => 587,
         'user' => 'info@mediterrano-em.de',
-        'password' => 'Herdem_382',
+        'password' => '',
         'from' => 'info@mediterrano-em.de',
         'to' => 'info@mediterrano-em.de',
     ],

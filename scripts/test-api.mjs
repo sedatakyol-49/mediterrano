@@ -1,3 +1,4 @@
+import { testInquiries } from './test-inquiries.mjs';
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
@@ -7,6 +8,7 @@ import { once } from "node:events";
 import { randomBytes } from "node:crypto";
 import { spawn, execFileSync } from "node:child_process";
 import { phpRuntime, phpString } from "./php-runtime.mjs";
+import { testOperations } from './test-operations.mjs';
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), "mediterrano-api-"));
 const publicDirectory = path.join(temporary, "public");
@@ -126,6 +128,8 @@ try {
   });
   assert.equal(response.status, 200);
   csrf = response.data.csrf;
+  await testOperations(request);
+  await testInquiries(request, base);
   let draft = (await request("draft")).data;
   const changed = structuredClone(draft.content);
   changed.products[0].priceCents = 1625;
@@ -182,6 +186,13 @@ try {
   const media = (await request("media")).data.items;
   assert.equal(new Set(media.map((image) => image.id)).size, media.length);
   assert.ok(media.length >= 94);
+  const unusedMedia = media.find((item) => !JSON.stringify(changed).includes(item.path) && !JSON.stringify(original.content).includes(item.path));
+  assert.ok(unusedMedia);
+  assert.equal((await request('media', { method: 'DELETE', body: { id: unusedMedia.id }, token: 'invalid' })).status, 403);
+  assert.equal((await request('media', { method: 'DELETE', body: { id: unusedMedia.id } })).status, 200);
+  assert.ok(!(await request('media')).data.items.some((item) => item.id === unusedMedia.id));
+  assert.ok(fs.existsSync(path.join(publicDirectory, unusedMedia.path)), 'Keep original photos for existing links');
+  assert.equal((await request('media', { method: 'DELETE', body: { id: unusedMedia.id } })).status, 404);
   const invalidUpload = new FormData();
   invalidUpload.append(
     "image",
@@ -204,6 +215,7 @@ try {
   upload.append("alt", "Integration photo");
   response = await request("upload", { method: "POST", body: upload });
   assert.equal(response.status, 201);
+  const uploadedId = response.data.item.id;
   assert.match(response.data.item.path, /^uploads\/[a-f0-9]{32}\.webp$/);
   const image = await fetch(base + "/" + response.data.item.path);
   assert.equal(image.headers.get("content-type"), "image/webp");
@@ -217,6 +229,7 @@ try {
       body: { content: changed, revision: draft.revision },
     })
   ).data;
+  assert.equal((await request('media', { method: 'DELETE', body: { id: uploadedId } })).status, 409);
   assert.equal(
     (
       await request("publish", {
@@ -233,6 +246,10 @@ try {
   assert.equal(response.status, 200);
   const published = (await request("content", { authenticated: false })).data
     .content;
+  const withoutUploadedImage = structuredClone(changed);
+  withoutUploadedImage.products[0].image = '';
+  assert.equal((await request('draft', { method: 'PUT', body: { content: withoutUploadedImage, revision: response.data.revision } })).status, 200);
+  assert.equal((await request('media', { method: 'DELETE', body: { id: uploadedId } })).status, 409, 'Published image stays protected even after removal from draft');
   assert.equal(published.products[0].priceCents, 1625);
   assert.equal(published.settings.heroTitle, changed.settings.heroTitle);
   assert.ok(

@@ -6,6 +6,14 @@ import { ProductsComponent } from './pages/products/products.component';
 
 export const routes: Routes = [
   {
+    path: 'angebot-anfragen',
+    loadComponent: () =>
+      import('./pages/quote-request/quote-request.component').then(
+        (m) => m.QuoteRequestComponent,
+      ),
+    title: 'Angebot anfragen | Mediterrano',
+  },
+  {
     path: 'admin',
     loadComponent: () =>
       import('./pages/admin/admin.component').then(

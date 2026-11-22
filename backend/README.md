@@ -125,8 +125,28 @@ API henüz kurulmadığında veya erişilemediğinde ziyaretçi arayüzü derlem
 
 ## Doğrulama
 
+### Müşteri teklif talepleri ve hukuki sayfalar
+
+- **Betriebsdaten → Rechtliche Angaben** bölümünden Impressum, Datenschutz ve AGB düzenlenir. Bunlar **Seiten & SEO** ile aynı kayıtlardır; taslak kaydetme ve yayınlama akışı korunur. Hukuki metinler otomatik üretilmez.
+- `/angebot-anfragen` sayfasında müşteri yayınlanmış ürünlerden paket oluşturur. Miktarlar istek miktarlarıdır; ağırlıklı ürünlerde gramaj müşteriyle ayrıca netleştirilir. Sunucu ürün adı, fotoğraf ve fiyatını yayınlanmış katalogdan alır. Formun gönderilmesi sipariş veya bağlayıcı teklif değildir.
+- Talepler `cms_documents` içinde ayrı `inq-*` kayıtlarında tutulur; yeniden SQL importu gerekmez. **Kundenanfragen** menüsü talep, müşteri bilgileri, durum, dahili notlar ve e-posta durumunu gösterir. Kayıtlar genel içerik API'sine dahil edilmez. Yönetici yazmaları CSRF ve sürüm kontrolü kullanır; anonim form da oturum CSRF tokenı gerektirir. IP başına saatte beş yeni gönderim denemesi sınırı vardır. Aynı formun ağ hatası nedeniyle yeniden gönderilmesi aynı kayıt anahtarıyla tekrar edilir.
+- Önce talep kalıcı olarak kaydedilir, sonra SMTP bildirimi denenir. `backend/config.local.php` içindeki mevcut `smtp` bölümünün `host`, `port`, `user`, `password`, `from`, `to` alanları kullanılır. Alıcı adresi public site e-posta alanından bağımsızdır. SMTP kurulmamışsa veya gönderim başarısızsa kayıt korunur; admin sonucu gösterir ve tekrar gönderme düğmesi sunar. `accepted` yalnızca SMTP sunucusunun mesajı kabul ettiğini belirtir, teslimat garantisi değildir. Sunucu kesilirse `pending` kalabilir; yönetici listeden yeniden deneyebilir. Canlı SMTP gerçek alıcıyla ayrıca doğrulanmalıdır.
+- WhatsApp otomatik bildirim değildir: müşteri başarılı kayıt sonrası hazır mesaj bağlantısına basar ve WhatsApp'ta kendisi gönderir. İşletme numarası **Betriebsdaten → WhatsApp** alanına ülke koduyla girilip yayınlanır (örnek `+491701234567`). Numara boşsa bağlantı gösterilmez; sabit hat numarası otomatik varsayılmaz. API anahtarı gerekmez.
+- Dağıtımda yeni `backend/inquiries.php` ve `backend/mail.php` dosyaları, değişen `backend/content.php`, `public/api/index.php` ve `public/contact.php` birlikte aktarılmalıdır. Önce backend, sonra public PHP ve JS/CSS, son olarak `index.html` yüklenir. Özel config, uploads ve veritabanı korunur. Yeni yasal sayfalar ve talep formu mobil/masaüstü tarayıcıda ayrıca gözden geçirilmelidir.
+
+### İşletme yönetimi
+
+Admin panelindeki **Etiketten & Druck**, **Angebote** ve **Personal & Zeiten** bölümleri, `cms_documents` tablosundaki ayrı `operations` kaydında tutulur. `/api/index.php?action=operations` yalnızca yönetici oturumuyla erişilebilir; PUT için CSRF ve sürüm kontrolü gerekir. Bu veriler yayınlanan web sitesi JSON'una veya başlangıç içeriğine eklenmez. İlk yönetici erişiminde boş kayıt oluşturulur; mevcut kurulum için yeniden SQL importu gerekmez. Bütün mevcut yöneticiler bu bölümlere erişebilir.
+
+- Etiketler web ürünlerinden alınabilir veya bağımsız oluşturulabilir. Kaydedilen etiket fiyatı daha sonra ürün değişince kendiliğinden değişmez; yeniden aktar düğmesi vardır. A4 ölçüleri milimetre olarak ayarlanır. Önizleme taşan metin veya yüklenemeyen görsel varsa baskıyı engeller. Yazıcıda %100 ölçek kullanılmalı ve ilk baskı normal kâğıtta ölçülmelidir. İçerik, alerjen, MHD ve parti verileri kullanıcı tarafından girilir; örnek Mango etiketine son kullanma tarihi varsayılmaz.
+- Teklif numarası ilk kayıtta sunucu tarafından verilir ve sonraki kayıtlarda korunur. Kalemler fiyatın net/brüt yorumuna göre kuruş düzeyinde yuvarlanır; vergi oranı kullanıcı seçimine bırakılır. PDF, tarayıcıdaki yazdır/ PDF kaydet işleviyle oluşturulur. Dahili notlar müşteri belgesine girmez. E-posta gönderimi yapılmaz; gönderildi durumu manuel kayıttır. Excel örneğindeki 35 kişilik kalemlerin toplamı 842,91 €; birimler kaynakta açık olmadığından örnekte “Einheit” olarak bırakılır.
+- Personel ve plan/gerçekleşen saatler ayrı tutulur. Saatler Europe/Berlin'e göre hesaplanır. Gece vardiyasında bitiş tarihi ayrıca girilir; ay filtresi başlangıç ayına göre çalışır. Aynı kişi ve türde çakışan kayıt, eksik personel, ters zaman aralığı ve vardiyadan uzun mola reddedilir. Sonbahardaki tekrarlanan saatler ayrıca kontrol edilmelidir. Bu bölüm bordro veya çalışan giriş sistemi değildir. CSV dışa aktarımı geçerli filtreye göre yapılır.
+
+Dağıtımda **backend/operations.php** de yüklenmelidir. Önce backend ve public/api, ardından yeni JS/CSS dosyaları, son olarak public/index.html aktarılmalıdır. Yapılandırma, uploads ve mevcut veritabanı korunur.
+
 ```sh
 npm run test:api
+npm test -- --watch=false --browsers=ChromeHeadless
 npm run build
 ```
 

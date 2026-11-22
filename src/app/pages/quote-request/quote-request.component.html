@@ -1,0 +1,223 @@
+<main class="request-page">
+  <header class="intro">
+    <p class="eyebrow">Mediterrano · Für Ihren Anlass</p>
+    <h1>Ihr Geschmack.<br /><em>Unser Angebot.</em></h1>
+    <p>
+      Stellen Sie Ihre persönliche Auswahl zusammen. Wir besprechen die Details
+      mit Ihnen und erstellen ein unverbindliches Angebot.
+    </p>
+    <div class="steps">
+      <span>01 Auswahl treffen</span><span>02 Anlass beschreiben</span
+      ><span>03 Angebot erhalten</span>
+    </div>
+  </header>
+  <section
+    *ngIf="reference; else editor"
+    class="confirmation"
+    aria-live="polite"
+  >
+    <span class="eyebrow">Anfrage eingegangen</span>
+    <h2>Vielen Dank für Ihre Auswahl.</h2>
+    <p>
+      Ihre Anfrage ist bei uns gespeichert. Wir melden uns persönlich bei Ihnen.
+    </p>
+    <p>
+      Ihre Referenz: <strong>{{ reference }}</strong>
+    </p>
+    <a
+      *ngIf="whatsappUrl"
+      class="primary"
+      [href]="whatsappUrl"
+      target="_blank"
+      rel="noopener"
+      >Zusätzlich per WhatsApp senden</a
+    >
+    <p *ngIf="whatsappUrl">
+      WhatsApp öffnet eine vorbereitete Nachricht. Sie entscheiden selbst, ob
+      Sie diese senden.
+    </p>
+    <a routerLink="/produkte">Zurück zur Speisekarte</a>
+  </section>
+  <ng-template #editor>
+    <button type="button" class="selection-jump" (click)="showSelection()">
+      Ihre Auswahl ({{ selected.length }}) · Zur Anfrage ↓
+    </button>
+    <div class="request-layout">
+      <section class="catalog">
+        <h2>Was darf es sein?</h2>
+        <div class="filters">
+          <label
+            >Produkt suchen<input
+              type="search"
+              [(ngModel)]="search"
+              placeholder="Zum Beispiel Börek" /></label
+          ><label
+            >Kategorie<select [(ngModel)]="category">
+              <option value="">Alle Kategorien</option>
+              <option *ngFor="let c of site.categories()" [value]="c.id">
+                {{ c.title }}
+              </option>
+            </select></label
+          >
+        </div>
+        <div class="product-grid">
+          <article *ngFor="let product of products">
+            <img
+              *ngIf="product.image"
+              [src]="product.image"
+              [alt]="product.imageAlt || product.name"
+              loading="lazy"
+            />
+            <div class="product-copy">
+              <small>{{ product.category }}</small>
+              <h3>{{ product.name }}</h3>
+              <p>{{ product.description }}</p>
+              <footer>
+                <span>{{ product.price || "Preis auf Anfrage" }}</span
+                ><button
+                  type="button"
+                  (click)="add(product.id)"
+                  [disabled]="busy"
+                  [attr.aria-label]="product.name + ' hinzufügen'"
+                >
+                  + Auswählen
+                </button>
+              </footer>
+            </div>
+          </article>
+        </div>
+        <p *ngIf="!products.length">
+          Keine Produkte gefunden. Bitte ändern Sie die Suche.
+        </p>
+      </section>
+      <aside id="request-details">
+        <form #requestForm="ngForm" (ngSubmit)="requestForm.valid && submit()">
+          <fieldset [disabled]="busy">
+            <p class="eyebrow">Ihre Zusammenstellung</p>
+            <h2>Ein Paket nach Ihrem Geschmack.</h2>
+            <p *ngIf="!selected.length" class="empty">
+              Wählen Sie links Ihre Lieblingsprodukte aus.
+            </p>
+            <div *ngFor="let product of selected" class="selection">
+              <div>
+                <strong>{{ product.name }}</strong
+                ><small>{{ product.price || "Preis auf Anfrage" }}</small>
+              </div>
+              <label
+                >Menge<input
+                  type="number"
+                  [name]="'qty-' + product.id"
+                  [(ngModel)]="quantities[product.id]"
+                  min="1"
+                  max="1000"
+                  step="1"
+                  required /></label
+              ><button
+                type="button"
+                (click)="remove(product.id)"
+                [attr.aria-label]="product.name + ' entfernen'"
+              >
+                Entfernen
+              </button>
+            </div>
+            <p class="hint">
+              Mengen sind Wunschmengen, bei Gewichtsware die Anzahl gewünschter
+              Portionen. Gewichte und Portionsgrößen können Sie unten ergänzen.
+              Preise dienen zur Orientierung; dies ist keine Bestellung.
+            </p>
+            <h3>Ihr Anlass & Kontakt</h3>
+            <label
+              >Name *<input
+                name="name"
+                [(ngModel)]="name"
+                required
+                maxlength="200"
+                autocomplete="name" /></label
+            ><label
+              >E-Mail *<input
+                name="email"
+                type="email"
+                email
+                [(ngModel)]="email"
+                required
+                maxlength="190"
+                autocomplete="email" /></label
+            ><label
+              >Telefon<input
+                name="phone"
+                type="tel"
+                [(ngModel)]="phone"
+                maxlength="80"
+                autocomplete="tel"
+            /></label>
+            <div class="form-pair">
+              <label
+                >Datum<input
+                  type="date"
+                  name="eventDate"
+                  [(ngModel)]="eventDate" /></label
+              ><label
+                >Personen<input
+                  type="number"
+                  name="guests"
+                  [(ngModel)]="guests"
+                  min="1"
+                  max="10000"
+                  step="1"
+              /></label>
+            </div>
+            <label
+              >Veranstaltungsort / Lieferadresse<textarea
+                name="address"
+                [(ngModel)]="address"
+                maxlength="1000"
+                rows="2"
+              ></textarea></label
+            ><label
+              >Ihre Wünsche<textarea
+                name="message"
+                [(ngModel)]="message"
+                maxlength="5000"
+                rows="4"
+                placeholder="Anlass, Portionsgrößen, Abholung oder Lieferung …"
+              ></textarea>
+            </label>
+            <label class="trap" aria-hidden="true"
+              >Website<input
+                name="website"
+                [(ngModel)]="website"
+                tabindex="-1"
+                autocomplete="off"
+            /></label>
+            <label class="consent"
+              ><input
+                type="checkbox"
+                name="consent"
+                [(ngModel)]="consent"
+                required
+              /><span
+                >Ich habe die
+                <a routerLink="/datenschutz" target="_blank"
+                  >Datenschutzhinweise</a
+                >
+                gelesen. Meine Angaben dürfen zur Bearbeitung dieser Anfrage
+                verwendet werden. *</span
+              ></label
+            >
+            <p *ngIf="error" role="alert" class="error">{{ error }}</p>
+            <button
+              class="primary submit"
+              [disabled]="busy || !selected.length || requestForm.invalid"
+            >
+              {{
+                busy
+                  ? "Anfrage wird gespeichert …"
+                  : "Unverbindlich Angebot anfragen"
+              }}
+            </button>
+          </fieldset>
+        </form>
+      </aside>
+    </div>
+  </ng-template>
+</main>
